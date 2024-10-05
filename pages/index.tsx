@@ -2,6 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import localFont from "next/font/local";
 import styles from "@/styles/Home.module.css";
+import { GetServerSideProps, NextPage } from "next";
+import axios from "axios";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,7 +16,17 @@ const geistMono = localFont({
   weight: "100 900",
 });
 
-export default function Home() {
+type Props = {
+  items: {
+    name: string,
+    email: string,
+    description: string,
+    time: Date,
+    claimed: Boolean
+  }
+}
+
+const Home: NextPage<Props> = ({items}) => {
   return (
     <>
       <Head>
@@ -56,7 +68,7 @@ export default function Home() {
                 width={20}
                 height={20}
               />
-              Deploy now
+              {items.name}
             </a>
             <a
               href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -116,3 +128,23 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  // get list of food items nearby
+
+  try {
+    const res = await axios.get("http://localhost:3000/api/test") //update to post later with location
+    const items = res.data
+    return {
+      props: {
+        items
+      }
+    }
+  } catch (err) {
+    return {
+      notFound: true
+    }
+  }
+}
+
+export default Home;
