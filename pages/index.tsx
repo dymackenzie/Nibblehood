@@ -4,6 +4,9 @@ import localFont from "next/font/local";
 import styles from "@/styles/Home.module.css";
 import { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
+import { Button, Flex, Text } from "@chakra-ui/react";
+import Item from "@/types/Item";
+import { useEffect } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,16 +20,14 @@ const geistMono = localFont({
 });
 
 type Props = {
-  items: {
-    name: string,
-    email: string,
-    description: string,
-    time: Date,
-    claimed: Boolean
-  }
+  items: Item[]
 }
 
+
 const Home: NextPage<Props> = ({items}) => {
+  useEffect(() => {
+    console.log(items)
+  }, [items])
   return (
     <>
       <Head>
@@ -35,12 +36,22 @@ const Home: NextPage<Props> = ({items}) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        className={`${styles.page} ${geistSans.variable} ${geistMono.variable}`}
-      >
+      
+        <Flex justifyContent={'space-around'} alignItems={'center'}  w={'100vw'} h={'100vh'}>
+        {items.map((item) => (
+          <Flex flexDir={'column'} bgColor={'red'} w={'25vw'} alignItems={'center'}>
+            <Text>{item.name}</Text>
+            <Image src={item.image} width={100} height={100} alt={"food pic"}/>        
+            <Text size={'sm'}>{item.description}</Text>
+            <Button>Claim!</Button>
+            <Text>{item.points}</Text>
+            <Text>{new Date(item.time).toDateString()}</Text>
+            <Text>{item.account.name}</Text>
+          </Flex>          
+        ))}
+        </Flex>
         
-        hi
-      </div>
+      
     </>
   );
 }
@@ -50,11 +61,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
 
   try {
     const res = await axios.get("http://localhost:3000/api/test") //update to post later with location
-    const items = res.data
+    const items: Item[] = res.data
     return {
       props: {
         items
-      }
+      }        
     }
   } catch (err) {
     return {
