@@ -17,13 +17,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received listItems request");
-    const [user, loading, error] = useAuthState(auth);
-    console.log(user);
+    
     const collectionName = "items";
     const field = "neighborhood";
     const operator = "=="
-    if (user) {
-        const userRef = doc(db, 'users', user.uid);
+    if (req.body.uid) {
+        const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
             console.log("Document data:", docSnap.data());
