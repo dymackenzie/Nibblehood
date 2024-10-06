@@ -6,9 +6,11 @@ import { FaLocationDot } from "react-icons/fa6"
 import { HiOutlineDotsHorizontal } from "react-icons/hi"
 import { IoMdShare } from "react-icons/io"
 import { IoTimeSharp } from "react-icons/io5"
+import { auth } from "@/firebase/clientApp"
+import axios from "axios"
 const Test = dynamic(() => import('./Test'), {
     ssr: false
-  })
+});
 //import Image from "next/image"
 
 //temp dummy data
@@ -16,6 +18,20 @@ const distance = 0.1
 
 
 const Item = ({item}: {item: ItemType}) => {
+
+    async function handleClaim() {
+      console.log("handling claim button");
+      const user = auth.currentUser;
+      if (user) {
+        const res = await axios.post("http://localhost:3000/api/updatePoints", {
+            itemId: item,
+            points: item.points,
+            userId: user.uid
+          });
+      } else {
+        console.log('user not authenticated');
+      }
+    }
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -46,7 +62,7 @@ const Item = ({item}: {item: ItemType}) => {
             </Flex>
             </CardBody>
             
-        </Card>      
+        </Card>
 
         <Modal isOpen={isOpen} onClose={onClose} size={'2xl'}>
         
@@ -90,7 +106,7 @@ const Item = ({item}: {item: ItemType}) => {
 
           <ModalFooter justifyContent={'center'}>
             
-            <Button colorScheme={'green'}>Claim</Button>
+            <Button onClick={handleClaim} colorScheme={'green'}>Claim</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

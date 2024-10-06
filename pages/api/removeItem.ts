@@ -3,8 +3,6 @@ import { doc, getDoc, setDoc, serverTimestamp, updateDoc, FieldValue, deleteDoc 
 import 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-const DEFAULT_POINTS = 5;
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     let data = req.body;
     const userId = data.userId;

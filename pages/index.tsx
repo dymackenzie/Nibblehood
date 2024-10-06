@@ -8,9 +8,10 @@ import { Button, Flex, Heading, Input, SimpleGrid, Text } from "@chakra-ui/react
 import Item from "@/types/Item";
 import { useEffect, useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
+import { itemConverter } from "@/types/Item";
 
 import dynamic from 'next/dynamic'
-import ItemComponent from "@/components/Item";
+import ItemComponent from "@/components/ItemComponent";
 import Sidenav from "@/components/Sidenav";
 
 const Test = dynamic(() => import('@/components/Test'), {
@@ -18,12 +19,6 @@ const Test = dynamic(() => import('@/components/Test'), {
 })
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "@/firebase/clientApp";
-
-
-
-type Props = {
-  items: Item[]
-}
 
 const Home: NextPage = () => {
 
@@ -34,21 +29,23 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (uid.length > 0) {
-      axios.post('http://localhost:3000/api/test', {uid: uid}).then((res) => setItems(res.data))
+      axios.post('http://localhost:3000/api/listFiltered', {
+        uid: uid,
+        collectionName: "items",
+        field: "neighborhood",
+        operator: "==",
+        value: "neighborhood"
+      }).then((res) => setItems(res.data))
     }
-    
+
   }, [uid])
-  
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUID(user.uid)
-        //setUser(user);
-        //getUserProfile(user.uid);
       } else {
-        //setUser(null);
-        //setProfile(null);
         console.log("logged out!")
       }
     });
@@ -96,8 +93,7 @@ const Home: NextPage = () => {
             ))}
           </SimpleGrid>
           </Flex>                    
-        </Flex>
-
+        </Flex>       
     </>
   );
 }

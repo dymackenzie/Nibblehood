@@ -1,8 +1,50 @@
 import Sidenav from "@/components/Sidenav"
 import User from "@/components/User"
 import { Flex, Heading, HStack, Image, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
+import { useEffect, useState } from "react"
+import axios from "axios"
+import { auth } from "@/firebase/clientApp"
+import Neighborhood from "@/types/Neighborhood"
+import Account from "@/types/Account"
 
 const Leaderboard = () => {
+
+    const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]);
+    const [topContributors, setTopContributors] = useState<Account[]>([]);
+    const [uid, setUID] = useState("");
+
+    useEffect(() => {
+        if (uid.length > 0) {
+          axios.post('http://localhost:3000/api/listOrdered', {
+            uid: uid,
+            collectionName: "neighborhoods",
+            field: "points",
+            direction: "asc"
+        }).then((res) => setNeighborhoods(res.data))
+        }
+      }, [uid])
+
+      useEffect(() => {
+        if (uid.length > 0) {
+          axios.post('http://localhost:3000/api/listOrdered', {
+            uid: uid,
+            collectionName: "users",
+            field: "points",
+            direction: "asc"
+        }).then((res) => setTopContributors(res.data))
+        }
+      }, [uid])
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+            setUID(user.uid)
+            } else {
+            console.log("logged out!")
+            }
+        });
+        return () => unsubscribe();
+    }, []);
 
     return (
         <Flex>
@@ -14,13 +56,13 @@ const Leaderboard = () => {
                 <Flex flexDir={'column'} mt={'30px'}>
                     <Text fontSize={'lg'} fontWeight={'bold'}>Top City Contributers</Text>
                     <HStack>
-
-                        <User/>
-                        <User/>
-                        <User/>
-
-                        
-                    </HStack>                    
+                        {topContributors.slice(0, 5).map((item) => (
+                            <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'} p={'20px'}>
+                                <Image w={"100px"} aspectRatio={1} objectFit={'cover'} src={"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"} borderRadius={'50%'}/>
+                                <Text fontSize={'lg'}>{item.name}</Text>
+                            </Flex>
+                        ))}
+                    </HStack>
                         <TableContainer>
                         <Table variant='simple'>
                             <TableCaption>Neighbourhood Rankings</TableCaption>
@@ -32,25 +74,16 @@ const Leaderboard = () => {
                             </Tr>
                             </Thead>
                             <Tbody>
-                            <Tr>
-                                <Td>1</Td>
-                                <Td>Kits</Td>
-                                <Td isNumeric>25343</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>2</Td>
-                                <Td>Burnaby</Td>
-                                <Td isNumeric>21832</Td>
-                            </Tr>
-                            <Tr>
-                                <Td>3</Td>
-                                <Td>Dunbar</Td>
-                                <Td isNumeric>19273</Td>
-                            </Tr>
+                            {neighborhoods.slice(0, 10).map((item, index) => (
+                                <Tr>
+                                    <Td>{index + 1}</Td>
+                                    <Td>{item.name}</Td>
+                                    <Td isNumeric>{item.points}</Td>
+                                </Tr>
+                            ))}
                             </Tbody>                            
                         </Table>
-                    </TableContainer>
-                    
+                        </TableContainer>
                 </Flex>
             </Flex>
 

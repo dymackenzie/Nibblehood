@@ -6,7 +6,7 @@ import firebase from "firebase/compat/app";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getAuth } from "firebase/auth";
 
-const DEFAULT_POINTS = 5;
+export const DEFAULT_POINTS = 5;
 
 // interface myItem {
 //     name: string,
@@ -47,15 +47,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             claimed,
             DEFAULT_POINTS,
             userId,
+            docSnap.get("name"),
             neighborhoodId)
 
         // Add a new document in collection "items"
         const docRef = doc(db, "items", name).withConverter(itemConverter);
         await setDoc(docRef, toAdd);
-        // Add timestamp value
-        // await updateDoc(docRef, {
-        //     timestamp: serverTimestamp()
-        // });
         res.status(200).end();
     } else {
         res.status(500).end();
