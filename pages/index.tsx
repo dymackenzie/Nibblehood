@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
 import dynamic from 'next/dynamic'
-import ItemComponent from "@/components/Item";
+import ItemComponent from "@/components/ItemComponent";
 import Sidenav from "@/components/Sidenav";
 
 const Test = dynamic(() => import('@/components/Test'), {
@@ -34,11 +34,11 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (uid.length > 0) {
-      axios.post('http://localhost:3000/api/listItems', {uid: uid}).then((res) => setItems(res.data))
+      axios.post('http://localhost:3000/api/listItems', { uid: uid }).then((res) => setItems(res.data))
     }
-    
+
   }, [uid])
-  
+
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -64,36 +64,36 @@ const Home: NextPage = () => {
       </Head>
       <Flex>
 
-          <Flex w={'20%'}>
-            <Sidenav/>
-          </Flex>
-          
-          <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
+        <Flex w={'20%'}>
+          <Sidenav />
+        </Flex>
 
-            <Flex  h={'40vh'} flexDir={'row'}>
+        <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
-              <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
-                <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
-                <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
-                <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
-                <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
-              </Flex>
+          <Flex h={'40vh'} flexDir={'row'}>
 
+            <Flex flexDir={'column'} justifyContent={'center'} w={'100%'}>
+              <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
+              <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
+              <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
+              <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
             </Flex>
-          
-            <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
-              <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
-              <Input maxW={'300px'} border={'2px solid black'} />
-            </Flex>     
+
+          </Flex>
+
+          <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
+            <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
+            <Input maxW={'300px'} border={'2px solid black'} />
+          </Flex>
 
 
-            <Flex py={'5vh'} justifyContent={'space-around'}>
+          <Flex py={'5vh'} justifyContent={'space-around'}>
             {items.map((item) => (
               <ItemComponent item={item} />
             ))}
           </Flex>
-          </Flex>                    
         </Flex>
+      </Flex>
 
     </>
   );

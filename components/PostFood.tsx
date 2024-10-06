@@ -5,13 +5,15 @@ import firebase from "firebase/compat/app";
 import axios from "axios";
 import SignUp from "@/pages/signup";
 import { getAuth } from "firebase/auth";
-import Item from "./Item";
+import ItemComponent from "./ItemComponent";
+import Item from "@/types/Item";
+import { DEFAULT_POINTS } from "@/pages/api/addItem";
 
 const PostFood = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState('');
-
+  const [item, setItem] = useState(new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", ""))
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -56,32 +58,37 @@ const PostFood = () => {
         <ModalContent>
           <ModalCloseButton />
           <ModalBody>
-            <Flex>
-              {/* <Flex bgColor={'green'} w={'40%'}>hi</Flex>
+            <Flex flexDirection='row'>
+              <Flex>
+                {/* <Flex bgColor={'green'} w={'40%'}>hi</Flex>
               <Flex bgColor={'red'} w={'60%'}>hi</Flex> */}
-              {/* <div className="App"> */}
-              <form onSubmit={handleSubmit} id="addItemForm">
-                <h2>Add Item:</h2>
-                <Input type="text"
-                  id="nameInput"
-                  placeholder="Name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  style={styles.input}
-                  required />
-                <Textarea
-                  id="textInput"
-                  placeholder="Description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  style={styles.description}
-                  required />
+                {/* <div className="App"> */}
+                <form onSubmit={handleSubmit} id="addItemForm">
+                  <h2>Add Item:</h2>
+                  <Input type="text"
+                    id="nameInput"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    style={styles.input}
+                    required />
+                  <Textarea
+                    id="textInput"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    // style={styles.description}
+                    required />
 
-                <Input type="file" onChange={handleChange} />
-                <Image src={file} style={styles.image} objectFit='cover' boxSize='400px' />
-                {/* <Button type="submit" colorScheme="blue" >Post!</Button> */}
-              </form>
-              {/* </div> */}
+                  <Input type="file" onChange={handleChange} />
+                  <Image src={file} style={styles.image} objectFit='cover' boxSize='400px' />
+                  {/* <Button type="submit" colorScheme="blue" >Post!</Button> */}
+                </form>
+                {/* </div> */}
+              </Flex>
+              <Flex >
+                <ItemComponent item={item} />
+              </Flex>
             </Flex>
           </ModalBody>
 
@@ -102,9 +109,6 @@ const styles = {
 
   },
   button: {
-
-  },
-  description: {
 
   },
   input: {

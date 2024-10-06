@@ -6,7 +6,7 @@ import firebase from "firebase/compat/app";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getAuth } from "firebase/auth";
 
-const DEFAULT_POINTS = 5;
+export const DEFAULT_POINTS = 5;
 
 // interface myItem {
 //     name: string,
