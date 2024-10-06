@@ -1,0 +1,7 @@
+@font-face {
+    font-family: "ppeditorial";
+    font-style: normal;
+    font-weight: 400;
+    src: url("/PPEditorialNew-Regular.otf") format("truetype");
+    unicode-range: U+0000-00FF, U+0100-024F;
+}
