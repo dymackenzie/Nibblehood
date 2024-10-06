@@ -1,19 +1,16 @@
 import { Button, Editable, EditableTextarea, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, useDisclosure } from "@chakra-ui/react"
 import React, { useState } from "react";
-// import { doAddItem } from "../api/addItem";
-import firebase from "firebase/compat/app";
 import axios from "axios";
 import SignUp from "@/pages/signup";
-import { getAuth } from "firebase/auth";
-import ItemComponent from "./ItemComponent";
-import Item from "@/types/Item";
-import { DEFAULT_POINTS } from "@/pages/api/addItem";
+import { auth } from "@/firebase/clientApp";
+import { useEffect } from "react";
 
 const PostFood = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState('');
-  const [item, setItem] = useState(new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", ""))
+  const [item, setItem] = useState('');
+  const [uid, setUID] = useState("");
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -26,28 +23,33 @@ const PostFood = () => {
   }
 
   async function handleSubmit() {
-    console.log('sending auth check');
-    const auth = getAuth();
-    const user = auth.currentUser;
-    if (user) {
-      // doAddItem(name, description, file, false, userID)
+    console.log('sending ');
+    if (uid.length > 0) {
       console.log('sending addItem request');
-      const res = await axios.post("http://localhost:3000/api/addItem",
-        {
+      axios.post("http://localhost:3000/api/addItem",{
           name: name,
           description: description,
           image: file,
           claimed: false,
-          uid: user.uid
+          uid: uid
         });
-      onClose();
-    } else {//redirect to login
+        onClose();
+    } else {
       console.log('user not authenticated, redirecting to log in (sign up)');
       return (<SignUp />);
     }
   }
 
-
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+        setUID(user.uid)
+        } else {
+        console.log("logged out!")
+        }
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <>
@@ -85,9 +87,6 @@ const PostFood = () => {
                   {/* <Button type="submit" colorScheme="blue" >Post!</Button> */}
                 </form>
                 {/* </div> */}
-              </Flex>
-              <Flex >
-                <ItemComponent item={item} />
               </Flex>
             </Flex>
           </ModalBody>

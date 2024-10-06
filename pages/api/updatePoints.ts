@@ -1,5 +1,4 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore"
-import firebase from "firebase/compat/app";
 import { db } from "@/firebase/clientApp";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Account, { accountConverter } from "@/types/Account";
@@ -11,10 +10,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const data = req.body;
     const itemId = data.itemId;
     const points = data.points;
-    // console.log(data);
-    const userId = data.uid;
+    const userId = data.userId;
     if (userId) {
-        
         // mark item as claimed
         let itemDocRef = doc(db, "items", itemId).withConverter(itemConverter);
         await updateDoc(itemDocRef, {
