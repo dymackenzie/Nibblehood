@@ -7,5 +7,6 @@ export default interface Item {
     time: Date,
     claimed: Boolean,
     points: number,
-    account: Account
+    addedBy: string,
+    neighborhood: string
 }
