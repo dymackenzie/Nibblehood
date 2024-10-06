@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const user = auth.currentUser;
     const collectionName = "items";
     const field = "neighborhood";
-    const operator = "=="
+    const operator = "==";
     if (user) {
         const userRef = doc(db, 'users', user.uid);
         const docSnap = await getDoc(userRef);
