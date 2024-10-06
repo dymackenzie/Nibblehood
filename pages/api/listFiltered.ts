@@ -1,6 +1,4 @@
-import { db, auth } from "@/firebase/clientApp"
-import { itemConverter } from "@/types/Item";
-import { useAuthState } from "react-firebase-hooks/auth"
+import { db } from "@/firebase/clientApp"
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore"
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -17,22 +15,23 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received listItems request");
-
-    const collectionName = "items";
-    const field = "neighborhood";
-    const operator = "=="
+    const data = req.body;
+    const collectionName = data.collectionName;
+    const field = data.field;
+    const operator = data.operator;
+    const value = data.value;
+    const converter = data.converter;
     if (req.body.uid) {
         const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
-            // console.log("Document data:", docSnap.data());
-            const value = docSnap.get("neighborhood");
+            const valueSnap = docSnap.get(value);
             try {
                 // Reference to the collection
-                const collectionRef = collection(db, collectionName).withConverter(itemConverter);
+                const collectionRef = collection(db, collectionName).withConverter(converter);
 
                 // Create the query
-                const q = query(collectionRef, where(field, operator, value));
+                const q = query(collectionRef, where(field, operator, valueSnap));
 
                 // Execute the query and fetch documents
                 const querySnapshot = await getDocs(q);
@@ -58,32 +57,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(500).end();
     }
 }
-// export async function getFilteredItems(
-//     collectionName: string,
-//     field: string,
-//     operator: WhereFilterOp,
-//     value: any,
-//     converter: any
-// ): Promise<DocumentData[]> {
-//     try {
-//         // Reference to the collection
-//         const collectionRef = collection(db, collectionName).withConverter(converter);
-
-//         // Create the query
-//         const q = query(collectionRef, where(field, operator, value));
-
-//         // Execute the query and fetch documents
-//         const querySnapshot = await getDocs(q);
-
-//         // Map over the documents and return data with document IDs
-//         const filteredItems = querySnapshot.docs.map(doc => ({
-//             id: doc.id,
-//             ...doc.data()
-//         }));
-
-//         return filteredItems;
-//     } catch (error) {
-//         console.error("Error fetching filtered items:", error);
-//         throw new Error(`Failed to fetch filtered items from ${collectionName}`);
-//     }
-// }

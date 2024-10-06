@@ -8,6 +8,7 @@ import { Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import Item from "@/types/Item";
 import { useEffect, useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
+import { itemConverter } from "@/types/Item";
 
 import dynamic from 'next/dynamic'
 import ItemComponent from "@/components/Item";
@@ -19,12 +20,6 @@ const Test = dynamic(() => import('@/components/Test'), {
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "@/firebase/clientApp";
 
-
-
-type Props = {
-  items: Item[]
-}
-
 const Home: NextPage = () => {
 
   // destructure user, loading, and error out of the hook
@@ -34,7 +29,14 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (uid.length > 0) {
-      axios.post('http://localhost:3000/api/listItems', {uid: uid}).then((res) => setItems(res.data))
+      axios.post('http://localhost:3000/api/listFiltered', {
+        uid: uid,
+        collectionName: "items",
+        field: "neighborhood",
+        operator: "==",
+        value: "neighborhood",
+        converter: itemConverter
+      }).then((res) => setItems(res.data))
     }
     
   }, [uid])
@@ -86,8 +88,10 @@ const Home: NextPage = () => {
               <Input maxW={'300px'} border={'2px solid black'} />
             </Flex>     
 
+          </Flex>
 
-            <Flex py={'5vh'} justifyContent={'space-around'}>
+          
+          <Flex py={'5vh'} justifyContent={'space-around'}>
             {items.map((item) => (
               <ItemComponent item={item} />
             ))}
