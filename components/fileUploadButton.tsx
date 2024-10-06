@@ -8,7 +8,7 @@ import {
   } from "firebase/storage";
 import { storage } from "@/firebase/clientApp";
 
-function FileUploadButton({ updateFile }) {
+function FileUploadButton({ updateFile } : any) {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const handleButtonClick = () => {
