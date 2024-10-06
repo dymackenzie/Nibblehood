@@ -36,7 +36,7 @@ const PostFood = () => {
     if (user) {
       // doAddItem(name, description, file, false, userID)
       console.log('sending addItem request');
-      const res = await axios.post("http://localhost:3000/api/addItem",
+      const res = await axios.post("/api/addItem",
         {
           name: name,
           description: description,

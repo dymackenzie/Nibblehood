@@ -15,7 +15,7 @@ const Leaderboard = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-          axios.post('http://localhost:3000/api/listOrdered', {
+          axios.post('/api/listOrdered', {
             uid: uid,
             collectionName: "neighborhoods",
             field: "points",
@@ -26,7 +26,7 @@ const Leaderboard = () => {
 
       useEffect(() => {
         if (uid.length > 0) {
-          axios.post('http://localhost:3000/api/listOrdered', {
+          axios.post('/api/listOrdered', {
             uid: uid,
             collectionName: "users",
             field: "points",

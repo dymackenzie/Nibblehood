@@ -19,7 +19,7 @@ const Navbar = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/getUser', {uid: uid}).then((res) => setUser(res.data))
+            axios.post('/api/getUser', {uid: uid}).then((res) => setUser(res.data))
         }
     }, [uid])
 

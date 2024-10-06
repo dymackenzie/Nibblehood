@@ -15,7 +15,7 @@ const Neighbourhood = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-          axios.post('http://localhost:3000/api/listFiltered', {
+          axios.post('/api/listFiltered', {
             uid: uid,
             collectionName: "items",
             field: "neighborhood",
@@ -27,7 +27,7 @@ const Neighbourhood = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/listFiltered', {
+            axios.post('/api/listFiltered', {
             uid: uid,
             collectionName: "users",
             field: "neighborhood",

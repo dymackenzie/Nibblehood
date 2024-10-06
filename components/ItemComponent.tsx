@@ -28,7 +28,7 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
     console.log("handling claim button");
     if (uid.length > 0) {
       let anyItem = item as any;
-      let temp = await axios.post("http://localhost:3000/api/updatePoints", {
+      let temp = await axios.post("/api/updatePoints", {
         itemId: anyItem.id,
         points: item.points,
         userId: uid
