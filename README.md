@@ -57,10 +57,9 @@ Nibblehood is a community-driven application designed to help people living in c
 
 #### Features
 
-* Community Events: Create, manage, and participate in neighborhood events such as potlucks, BBQs, garage sales, or block parties.
-* Local Recipes Sharing: Share recipes with your neighbors, discover home-cooked meals, and collaborate on community cookbooks.
-* Resource Sharing: Borrow tools, share garden produce, or offer assistance to your neighbors.
+* Local Food Sharing: Share food with your neighbors and discover home-cooked meals.
 * Location-based: All features are localized, ensuring that your interactions are with those in your immediate vicinity.
+* Gamification: With each interaction earning points, you can compete against other neighborhoods to see who can be the most connected community!
 
 #### Vision
 
