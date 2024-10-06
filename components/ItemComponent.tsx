@@ -4,6 +4,8 @@ import dynamic from "next/dynamic"
 import { FaBookmark, FaWalking } from "react-icons/fa"
 import { HiOutlineDotsHorizontal } from "react-icons/hi"
 import { IoMdShare } from "react-icons/io"
+import { auth } from "@/firebase/clientApp"
+import axios from "axios"
 const Test = dynamic(() => import('./Test'), {
   ssr: false
 })
@@ -14,6 +16,21 @@ const distance = 0.1
 
 
 const ItemComponent = ({ item }: { item: ItemType }) => {
+
+  async function handleClaim() {
+    console.log("handling claim button");
+    const user = auth.currentUser;
+    if (user) {
+      console.log(item);
+      const res = await axios.post("http://localhost:3000/api/updatePoints", {
+          itemId: item,
+          points: item.points,
+          userId: user.uid
+        });
+    } else {
+      console.log('user not authenticated');
+    }
+  }
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -75,7 +92,7 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
 
           <ModalFooter justifyContent={'center'}>
 
-            <Button colorScheme={'green'}>Claim</Button>
+            <Button onClick={handleClaim} colorScheme={'green'}>Claim</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

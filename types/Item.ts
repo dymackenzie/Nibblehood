@@ -7,7 +7,7 @@ export default class Item {
     points: number;
     account: string;
     accountName: string;
-    neighborhood: string
+    neighborhood: string;
 
     constructor(name: string, description: string, image: string,
         time: Date, claimed: Boolean, points: number, account: string, 

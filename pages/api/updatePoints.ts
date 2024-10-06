@@ -12,7 +12,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const itemId = data.itemId;
     const points = data.points;
     // console.log(data);
-    const userId = firebase.auth().currentUser?.uid;
+    const userId = data.uid;
     if (userId) {
         
         // mark item as claimed

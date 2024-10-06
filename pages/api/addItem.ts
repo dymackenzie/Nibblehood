@@ -53,10 +53,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Add a new document in collection "items"
         const docRef = doc(db, "items", name).withConverter(itemConverter);
         await setDoc(docRef, toAdd);
-        // Add timestamp value
-        // await updateDoc(docRef, {
-        //     timestamp: serverTimestamp()
-        // });
         res.status(200).end();
     } else {
         res.status(500).end();

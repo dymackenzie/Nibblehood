@@ -34,7 +34,7 @@ const Navbar = () => {
       }, []);
 
     return (
-        <Flex h={'10vh'} borderBottom={'3px solid black'}>
+        <Flex h={'10vh'} borderBottom={'2px solid #F1F1F1'}>
             <Flex justifyContent={'center'} alignItems={'center'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
                 <Image h={'100%'} src={'https://static-00.iconduck.com/assets.00/nextjs-icon-2048x1234-pqycciiu.png'}/>
             </Flex>

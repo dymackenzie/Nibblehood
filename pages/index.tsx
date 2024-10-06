@@ -4,7 +4,7 @@ import localFont from "next/font/local";
 //import styles from "@/styles/Home.module.css";
 import { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
-import { Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { Button, Flex, Heading, Input, SimpleGrid, Text } from "@chakra-ui/react";
 import Item from "@/types/Item";
 import { useEffect, useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
@@ -34,8 +34,7 @@ const Home: NextPage = () => {
         collectionName: "items",
         field: "neighborhood",
         operator: "==",
-        value: "neighborhood",
-        converter: itemConverter
+        value: "neighborhood"
       }).then((res) => setItems(res.data))
     }
 
@@ -46,11 +45,7 @@ const Home: NextPage = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUID(user.uid)
-        //setUser(user);
-        //getUserProfile(user.uid);
       } else {
-        //setUser(null);
-        //setProfile(null);
         console.log("logged out!")
       }
     });
@@ -66,38 +61,39 @@ const Home: NextPage = () => {
       </Head>
       <Flex>
 
-        <Flex w={'20%'}>
-          <Sidenav />
-        </Flex>
+          <Flex w={'20%'}>
+            <Sidenav/>
+          </Flex>
+          
+          <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
-        <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
+            <Flex  h={'40vh'} flexDir={'row'}>
 
-          <Flex h={'40vh'} flexDir={'row'}>
+              <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
+                <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
+                <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
+                <Text mt={'20px'} fontSize={'4xl'}>Turn your excess food into smiles next door</Text>                
+              </Flex>
 
-            <Flex flexDir={'column'} justifyContent={'center'} w={'100%'}>
-              <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
-              <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
-              <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
-              <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
+              <Flex>
+
+              </Flex>
+
             </Flex>
-
-          </Flex>
-
-          <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
-            <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
-            <Input maxW={'300px'} border={'2px solid black'} />
-          </Flex>
-
-        </Flex>
+          
+            <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
+              <Text fontSize={'4xl'} fontWeight={'bold'}>Available Items</Text>
+              
+            </Flex>     
 
 
-        <Flex py={'5vh'} justifyContent={'space-around'}>
-          {items.map((item) => (
-            <ItemComponent item={item} />
-          ))}
-        </Flex>
-      </Flex>
-
+            <SimpleGrid columns={3} py={'5vh'} spacing={3} justifyContent={'space-around'} mr={3}>
+            {items.map((item) => (
+              <ItemComponent item={item} />
+            ))}
+          </SimpleGrid>
+          </Flex>                    
+        </Flex>       
     </>
   );
 }

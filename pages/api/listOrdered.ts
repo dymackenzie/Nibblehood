@@ -11,7 +11,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
  * @returns A promise that resolves to an array of ordered documents
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.log("received listNeighbourhoods request");
+  console.log("received listOrdered request");
   const data = req.body;
   const direction = data.direction;
   const field = data.field;

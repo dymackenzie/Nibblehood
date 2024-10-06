@@ -14,13 +14,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
  */
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    console.log("received listItems request");
+    console.log("received listFiltered request");
     const data = req.body;
     const collectionName = data.collectionName;
     const field = data.field;
     const operator = data.operator;
     const value = data.value;
-    const converter = data.converter;
     if (req.body.uid) {
         const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
@@ -28,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const valueSnap = docSnap.get(value);
             try {
                 // Reference to the collection
-                const collectionRef = collection(db, collectionName).withConverter(converter);
+                const collectionRef = collection(db, collectionName);
 
                 // Create the query
                 const q = query(collectionRef, where(field, operator, valueSnap));
