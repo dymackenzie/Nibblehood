@@ -6,6 +6,7 @@ import { auth } from "@/firebase/clientApp"
 import axios from "axios"
 import Account from "@/types/Account"
 import { IoLogOutOutline, IoPerson } from "react-icons/io5"
+import { MdStars } from "react-icons/md"
 
 const Navbar = () => {
     const router = useRouter()
@@ -46,12 +47,18 @@ const Navbar = () => {
                 <Text ml={2}>{user?.neighborhoodName}</Text>
             </Flex>       
             {     
-            user ? <Flex w={'18%'} justifyContent={'right'} alignItems={'center'}>
-                <Flex alignItems={'center'} marginRight={'2rem'}>
-                    <IoPerson fontSize={'20px'}/>
-                    <Text ml={3} fontSize={'2xl'}>{user.name}</Text>
+            user ? <Flex w={'18%'} justifyContent={'right'} alignItems={'center'} fontSize={'xl'}>
+                <Flex>
+                    <Flex alignItems={'center'} marginRight={'2rem'}>
+                        <IoPerson />
+                        <Text ml={3} >{user.name}</Text>
+                    </Flex>
+                    <Flex alignItems={'center'} marginRight={'2rem'}>
+                        <MdStars />
+                        <Text ml={3} >{user.points}</Text>
+                    </Flex>
                 </Flex>
-                <IconButton as={IoLogOutOutline} onClick={logout} size={'md'} p={1} aria-label="logout"/>
+                <IconButton as={IoLogOutOutline} variant={'ghost'} onClick={logout} size={'md'} p={1} aria-label="logout"/>
                 </Flex> :
             <><Flex justifyContent={'center'} alignItems={'center'} w={'10%'} fontSize={'md'}>
                 <Button onClick={() => router.push('/login')} variant={'ghost'}>Log In</Button>
