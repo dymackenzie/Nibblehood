@@ -87,9 +87,9 @@ const Neighbourhood = () => {
 
             <Flex flexDir={'column'} w={'80%'} ml={'20px'} mt={'15px'}>
                 <Flex marginLeft={5}>
-                    <Heading paddingBottom={-10} fontSize="5xl" mb={5}>{neighborhood?.name}</Heading>
+                    <Heading fontSize="5xl" mb={5}>{neighborhood?.name}</Heading>
                 </Flex>
-                <Flex paddingTop={-10} >
+                <Flex  >
                     {/* Main Neighborhood Card */}
                     <Card w={'45%'} mt={'20px'} p={5} h={'fit-content'} boxShadow='lg' borderRadius='lg'>
                         <CardHeader>
@@ -117,11 +117,11 @@ const Neighbourhood = () => {
                             <Divider />
                             <Flex justifyContent={'space-around'} mt={3}>
                                 <Flex flexDir={'column'} alignItems={'center'}>
-                                    <Text fontWeight="bold" fontSize="2xl">680 kg</Text>
+                                    <Text fontWeight="bold" fontSize="2xl">{neighborhood ? neighborhood.points * 3 : 0} kg</Text>
                                     <Text fontSize="sm">Food Saved</Text>
                                 </Flex>
                                 <Flex flexDir={'column'} alignItems={'center'}>
-                                    <Text fontWeight="bold" fontSize="2xl">95,490</Text>
+                                    <Text fontWeight="bold" fontSize="2xl">{neighborhood?.points}</Text>
                                     <Text fontSize="sm">Points Raised</Text>
                                 </Flex>
                             </Flex>
@@ -162,9 +162,9 @@ const Neighbourhood = () => {
                                         <Divider />
                                         <Text fontSize={'xl'} fontWeight={'bold'} py={3}>{item.name}</Text>
                                         <Divider />
-                                        <Flex justifyContent={'space-between'}>
-                                            <Text>{item.accountName}</Text>
-                                            <Text>{item.claimed.toString()}</Text>
+                                        <Flex flexDir={'column'} justifyContent={'space-between'}>
+                                            <Text>Posted by: {item.accountName}</Text>
+                                            <Text>{item.claimed ? "claimed" : "unclaimed"}</Text>
                                         </Flex>
                                     </CardBody>
                                 </Card>
