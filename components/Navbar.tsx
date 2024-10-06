@@ -38,10 +38,10 @@ const Navbar = () => {
         <Flex borderBottom={'2px solid #F1F1F1'}                                     
             h={'10vh'}
             >
-            <Flex justifyContent={'center'} alignItems={'center'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
-                <Image h={'100%'} src={'https://static-00.iconduck.com/assets.00/nextjs-icon-2048x1234-pqycciiu.png'}/>
+            <Flex justifyContent={'left'} alignItems={'left'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
+                <Image h={'100%'} src={'/nibblehood_logo.svg'} padding={'2rem'}/>
             </Flex>
-            <Flex alignItems={'center'} w={'60%'} fontSize={'2xl'}>
+            <Flex justifyContent={'left'} alignItems={'center'} w={'60%'} fontSize={'2xl'}>
                 <FaLocationDot/>
                 <Text ml={2}>{user?.neighborhoodName}</Text>
             </Flex>       
