@@ -1,7 +1,9 @@
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react"
 import { FaLocationDot } from "react-icons/fa6"
+import { useRouter } from "next/router"
 
 const Navbar = () => {
+    const router = useRouter()
     return (
         <Flex h={'10vh'} borderBottom={'3px solid black'}>
             <Flex justifyContent={'center'} alignItems={'center'} w={'20%'} fontSize={'xl'}>
@@ -13,10 +15,10 @@ const Navbar = () => {
 
             </Flex>            
             <Flex justifyContent={'center'} alignItems={'center'} w={'10%'} fontSize={'md'}>
-                <Button variant={'ghost'}>Log In</Button>
+                <Button onClick={() => router.push('/login')} variant={'ghost'}>Log In</Button>
             </Flex>
             <Flex justifyContent={'center'} alignItems={'center'} w={'10%'} fontSize={'md'}>
-                <Button>Sign Up</Button>
+                <Button onClick={() => router.push('/signup')}>Sign Up</Button>
             </Flex>
         </Flex>
     )

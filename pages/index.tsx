@@ -30,6 +30,8 @@ const Home: NextPage = () => {
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
 
+  console.log(user);
+
   /*
   useEffect(() => {
     axios.get('http://localhost:3000/api/listItems').then((res) => console.log(res.data))
