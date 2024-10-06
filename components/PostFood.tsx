@@ -1,4 +1,4 @@
-import { Text, Box, Button, Editable, EditableTextarea, Flex, Heading, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Textarea, useDisclosure } from "@chakra-ui/react"
+import { Text, Box, Button, Editable, EditableTextarea, Flex, Heading, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
 import React, { useState } from "react";
 // import { doAddItem } from "../api/addItem";
 import firebase from "firebase/compat/app";
@@ -9,6 +9,7 @@ import ItemComponent from "./ItemComponent";
 import Item from "@/types/Item";
 import { DEFAULT_POINTS } from "@/pages/api/addItem";
 import FileUploadButton from "./fileUploadButton";
+import { useRouter } from "next/router";
 
 
 const PostFood = () => {
@@ -17,6 +18,9 @@ const PostFood = () => {
   const [file, setFile] = useState('');
   const displayName = getAuth().currentUser?.displayName;
   const [item, setItem] = useState(getItem());
+
+  const toast = useToast()
+  const router = useRouter()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -27,7 +31,8 @@ const PostFood = () => {
   async function handleSubmit() {
     console.log('sending auth check');
     const auth = getAuth();
-    const user = auth.currentUser;
+    const user = auth.currentUser;    
+
     if (user) {
       // doAddItem(name, description, file, false, userID)
       console.log('sending addItem request');
@@ -40,6 +45,9 @@ const PostFood = () => {
           uid: user.uid
         });
       onClose();
+      setFile("")
+      toast({title: 'Success!', description: 'Item Uploaded', status: 'success'})
+    router.reload()
     } else {//redirect to login
       console.log('user not authenticated, redirecting to log in (sign up)');
       return (<SignUp />);

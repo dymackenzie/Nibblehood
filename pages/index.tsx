@@ -81,7 +81,7 @@ const Home: NextPage = () => {
 
             <SimpleGrid columns={3} py={'5vh'} spacing={3} justifyContent={'space-around'} mr={3}>
             {items.map((item) => (
-              <ItemComponent item={item} />
+              (!item.claimed) && <ItemComponent item={item} />
             ))}
           </SimpleGrid>
           </Flex>                    
