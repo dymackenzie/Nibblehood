@@ -17,7 +17,7 @@ function FileUploadButton({ updateFile } : any) {
         }
     };
 
-    const [imageUpload, setImageUpload] = useState(null);
+    const [imageUpload, setImageUpload] = useState<File | null>(null);
 
     useEffect(() => {
         if (imageUpload === null) {          
@@ -53,7 +53,9 @@ function FileUploadButton({ updateFile } : any) {
                 type="file"
                 ref={inputRef}
                 onChange={(e) => {
-                    setImageUpload(e.target.files[0])
+                    if (e.target.files && e.target.files[0]) {
+                        setImageUpload(e.target.files[0]);
+                    }
                 }}
                 display="none" // Hide the default input element
                 accept="image/*"
