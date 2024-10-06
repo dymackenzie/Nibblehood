@@ -32,7 +32,6 @@ const Home: NextPage = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [uid, setUID] = useState("");
 
-  
   useEffect(() => {
     if (uid.length > 0) {
       axios.post('http://localhost:3000/api/listItems', {uid: uid}).then((res) => setItems(res.data))
@@ -55,7 +54,6 @@ const Home: NextPage = () => {
     });
     return () => unsubscribe();
   }, []);
-  
 
   return (
     <>
@@ -89,16 +87,12 @@ const Home: NextPage = () => {
             </Flex>     
 
 
-
-
-          </Flex>
-
-          
-          <Flex py={'5vh'} justifyContent={'space-around'}>
+            <Flex py={'5vh'} justifyContent={'space-around'}>
             {items.map((item) => (
               <ItemComponent item={item} />
             ))}
           </Flex>
+          </Flex>                    
         </Flex>
 
     </>
