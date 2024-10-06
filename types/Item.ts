@@ -5,9 +5,8 @@ export default interface Item {
     name: string,
     description: string,
     image: string,
-    time: FieldValue,
+    time: Date,
     claimed: Boolean,
     points: number,
-    account: Account,
-    neighborhood: string
+    account: Account
 }

@@ -1,9 +1,19 @@
 import { db } from "@/firebase/clientApp";
-import { doc, getDoc, setDoc, serverTimestamp, updateDoc } from "firebase/firestore";
-import Item from "@/types/Item";
+import { doc, getDoc, setDoc, serverTimestamp, updateDoc, FieldValue } from "firebase/firestore";
 import 'firebase/firestore';
 
 const DEFAULT_POINTS = 5;
+
+interface myItem {
+    name: string,
+    description: string,
+    image: string,
+    time: FieldValue,
+    claimed: boolean,
+    points: number,
+    addedBy: string,
+    neighborhood: string
+}
 
 
 export const doAddItem = async (name: string, description: string, image: string, claimed: boolean, userId: string) => {
@@ -17,19 +27,14 @@ export const doAddItem = async (name: string, description: string, image: string
         // docSnap.data() will be undefined in this case
         console.log("No such user!");
     }
-    const toAdd: Item = {
+    const toAdd: myItem = {
         name: name,
         description: description,
         image: image,
         time: serverTimestamp(),
         claimed: claimed,
         points: DEFAULT_POINTS,
-        account: {
-            name: "absc",
-            email: "askjch@lAHJKB",
-            password: "pass123",
-            location: "alksdjf"
-        },
+        addedBy: userId,
         // account: userRef,
         neighborhood: neighborhoodId
     }
