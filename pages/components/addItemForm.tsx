@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import { doAddItem } from "../api/addItem";
 import firebase from "firebase/compat/app";
 import axios from "axios";
-import SignUp from "./signup";
+import SignUp from "../signup";
 import { getAuth } from "firebase/auth";
 
 const AddItemForm = () => {

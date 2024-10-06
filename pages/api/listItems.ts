@@ -17,7 +17,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received listItems request");
-    
+
     const collectionName = "items";
     const field = "neighborhood";
     const operator = "=="
@@ -25,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
+            // console.log("Document data:", docSnap.data());
             const value = docSnap.get("neighborhood");
             try {
                 // Reference to the collection

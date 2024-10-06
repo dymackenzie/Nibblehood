@@ -1,9 +1,10 @@
 import { auth, db } from "@/firebase/clientApp";
 import { doc, getDoc, setDoc, serverTimestamp, updateDoc, FieldValue } from "firebase/firestore";
 import 'firebase/firestore';
-import Item from "@/types/Item";
+import Item, { itemConverter } from "@/types/Item";
 import firebase from "firebase/compat/app";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getAuth } from "firebase/auth";
 
 const DEFAULT_POINTS = 5;
 
@@ -26,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const description = data.description;
     const image = data.image;
     const claimed = data.claimed;
-    const userId = auth.currentUser?.uid;
+    const userId = data.uid;
     if (userId) {
         const userRef = doc(db, 'users', userId);
         const docSnap = await getDoc(userRef);
@@ -49,12 +50,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             neighborhoodId)
 
         // Add a new document in collection "items"
-        const docRef = doc(db, "items", name);
+        const docRef = doc(db, "items", name).withConverter(itemConverter);
         await setDoc(docRef, toAdd);
         // Add timestamp value
-        await updateDoc(docRef, {
-            timestamp: serverTimestamp()
-        });
+        // await updateDoc(docRef, {
+        //     timestamp: serverTimestamp()
+        // });
         res.status(200).end();
     } else {
         res.status(500).end();
