@@ -1,4 +1,4 @@
-import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
+import { Button, Editable, EditableTextarea, Flex, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, useDisclosure } from "@chakra-ui/react"
 import React, { useState } from "react";
 // import { doAddItem } from "../api/addItem";
 import firebase from "firebase/compat/app";
@@ -60,23 +60,24 @@ const PostFood = () => {
               <div className="App">
                 <form onSubmit={handleSubmit} id="addItemForm">
                   <h2>Add Item:</h2>
-                  <input type="text"
+                  <Input type="text"
                     id="nameInput"
                     placeholder="Name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     style={styles.input}
                     required />
-                  <input type="text"
+                  <Textarea
                     id="textInput"
                     placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    style={styles.input}
+                    style={styles.description}
                     required />
-                  <input type="file" onChange={handleChange} />
+
+                  <Input type="file" onChange={handleChange} />
                   <img src={file} />
-                  <Button type="submit" colorScheme="blue" >Submit</Button>
+                  <Button type="submit" colorScheme="blue" >Post!</Button>
                 </form>
               </div>
             </Flex>
@@ -100,7 +101,11 @@ const styles = {
   },
   button: {
 
+  },
+  description: {
+
   }
+
 }
 
 export default PostFood
