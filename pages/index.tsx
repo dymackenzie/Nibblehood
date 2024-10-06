@@ -34,8 +34,7 @@ const Home: NextPage = () => {
         collectionName: "items",
         field: "neighborhood",
         operator: "==",
-        value: "neighborhood",
-        converter: itemConverter
+        value: "neighborhood"
       }).then((res) => setItems(res.data))
     }
 
@@ -46,11 +45,7 @@ const Home: NextPage = () => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUID(user.uid)
-        //setUser(user);
-        //getUserProfile(user.uid);
       } else {
-        //setUser(null);
-        //setProfile(null);
         console.log("logged out!")
       }
     });

@@ -19,8 +19,7 @@ const Neighbourhood = () => {
             collectionName: "items",
             field: "neighborhood",
             operator: "==",
-            value: "neighborhood",
-            converter: itemConverter
+            value: "neighborhood"
         }).then((res) => setRecentActivity(res.data))
         }
       }, [uid])
@@ -32,8 +31,7 @@ const Neighbourhood = () => {
             collectionName: "users",
             field: "neighborhood",
             operator: "==",
-            value: "neighborhood",
-            converter: accountConverter
+            value: "neighborhood"
         }).then((res) => setTopContributors(res.data))
         }
       }, [uid])
@@ -110,8 +108,8 @@ const Neighbourhood = () => {
                             <Text fontSize={'xl'} fontWeight={'bold'} py={3}>{item.name}</Text>
                             <Divider/>
                             <Flex justifyContent={'space-between'}>
-                                <Text>{item.time.toUTCString()}</Text>
-                                <Text>{item.account}</Text>
+                                <Text>{item.accountName}</Text>
+                                <Text>{item.claimed.toString()}</Text>
                             </Flex>
                         </CardBody>
                     ))}
