@@ -1,4 +1,4 @@
-import { Button, Editable, EditableTextarea, Flex, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Textarea, useDisclosure } from "@chakra-ui/react"
+import { Text, Box, Button, Editable, EditableTextarea, Flex, Heading, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Textarea, useDisclosure } from "@chakra-ui/react"
 import React, { useState } from "react";
 // import { doAddItem } from "../api/addItem";
 import firebase from "firebase/compat/app";
@@ -8,6 +8,8 @@ import { getAuth } from "firebase/auth";
 import ItemComponent from "./ItemComponent";
 import Item from "@/types/Item";
 import { DEFAULT_POINTS } from "@/pages/api/addItem";
+import FileUploadButton from "./fileUploadButton";
+
 
 const PostFood = () => {
   const [name, setName] = useState('');
@@ -56,52 +58,94 @@ const PostFood = () => {
 
   return (
     <>
-      <Button bottom={0} pos={'relative'} onClick={onOpen}>Post Food</Button>
+      <Button bottom={0} pos={'relative'} onClick={onOpen} colorScheme='teal' size='lg'>Post Food</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size={'full'}>
+      <Modal isOpen={isOpen} onClose={onClose} size={'lg'}>
         <ModalOverlay />
         <ModalContent>
+          <ModalHeader textAlign="center" fontSize="2xl" fontWeight="bold">
+            Add New Food Item
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <Flex flexDirection='row'>
-              <Flex flexGrow='2'>
-                {/* <Flex bgColor={'green'} w={'40%'}>hi</Flex>
-              <Flex bgColor={'red'} w={'60%'}>hi</Flex> */}
-                {/* <div className="App"> */}
+            <Flex flexDirection='column' alignItems='center'>
+              <Box w="100%" p={5}>
                 <form onSubmit={handleSubmit} id="addItemForm">
-                  <h2>Add Item:</h2>
-                  <Input type="text"
-                    id="nameInput"
-                    placeholder="Name"
-                    value={name}
-                    onChange={(e) => { setName(e.target.value); setItem(getItem()); }}
-                    style={styles.input}
-                    required />
-                  <Textarea
-                    id="textInput"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => { setDescription(e.target.value); setItem(getItem()); }}
-                    // style={styles.description}
-                    required />
+                  <Stack spacing={5}>
+                    <Heading as="h3" size="md">Item Details</Heading>
 
-                  <Input type="file" onChange={handleChange} />
-                  <Image src={file} style={styles.image} objectFit='cover' boxSize='400px' />
-                  {/* <Button type="submit" colorScheme="blue" >Post!</Button> */}
+                    <Input
+                      type="text"
+                      id="nameInput"
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => { setName(e.target.value); setItem(getItem()); }}
+                      size='lg'
+                      focusBorderColor='teal.500'
+                    />
+
+                    <Textarea
+                      id="textInput"
+                      placeholder="Description"
+                      value={description}
+                      onChange={(e) => { setDescription(e.target.value); setItem(getItem()); }}
+                      size='lg'
+                      focusBorderColor='teal.500'
+                    />
+
+                    {/* <Input type="file" onChange={handleChange} p={2} style={}/> */}
+
+                    {/* <FileUploadButton onChange={handleChange} /> */}
+                    {/* {file && (
+                      <Image
+                        src={file}
+                        boxSize='300px'
+                        objectFit='cover'
+                        borderRadius='md'
+                        mt={4}
+                        alt='Selected item image'
+                      />
+                    )} */}
+                    <Box p={4} borderWidth="1px" borderRadius="lg" boxShadow="lg" maxW="400px" mx="auto">
+                      <FileUploadButton onChange={handleChange} />
+
+                      {file && (
+                        <Box mt={4} textAlign="center">
+                          <Box
+                            w="100%"
+                            h="300px"
+                            overflow="hidden"
+                            display="flex"
+                            justifyContent="center"
+                            alignItems="center"
+                            borderWidth="2px"
+                            borderColor="teal.500"
+                            borderRadius="md"
+                          >
+                            <Image
+                              src={file}
+                              alt="Uploaded Image"
+                              objectFit="cover"
+                              width="100%"
+                              height="100%"
+                            />
+                          </Box>
+                        </Box>
+                      )}
+                    </Box>
+                  </Stack>
                 </form>
-                {/* </div> */}
-              </Flex>
-              <Flex flexGrow='1'>
+              </Box>
+              {/* <Box mt={8} w="100%">
                 <ItemComponent item={item} />
-              </Flex>
+              </Box> */}
             </Flex>
           </ModalBody>
 
           <ModalFooter>
-            <Button type="submit" colorScheme='blue' mr={3} onClick={handleSubmit}>
+            <Button type="submit" colorScheme='teal' size="md" onClick={handleSubmit}>
               Post!
             </Button>
-            {/* <Button variant='ghost'>Secondary Action</Button> */}
           </ModalFooter>
         </ModalContent>
       </Modal>
