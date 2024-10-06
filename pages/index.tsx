@@ -8,16 +8,7 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "@/firebase/clientApp";
 
-// const geistSans = localFont({
-//   src: "./fonts/GeistVF.woff",
-//   variable: "--font-geist-sans",
-//   weight: "100 900",
-// });
-// const geistMono = localFont({
-//   src: "./fonts/GeistMonoVF.woff",
-//   variable: "--font-geist-mono",
-//   weight: "100 900",
-// });
+
 
 type Props = {
   items: Item[]
@@ -26,7 +17,9 @@ type Props = {
 const Home: NextPage<Props> = ({items}) => {
 
   // destructure user, loading, and error out of the hook
-  const [user, loading, error] = useAuthState(auth); 
+  const [user, loading, error] = useAuthState(auth);
+
+
 
   useEffect(() => {
     console.log(items)
