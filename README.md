@@ -21,13 +21,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="/nibblehood_icon.svg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Neighborfood</h3>
 
   <p align="center">
-    Pass your plate, power your neighbourhood!
+    Pass your plate, power your neighborhood!
   </p>
 </div>
 
@@ -50,9 +50,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![product_page_screenshot](https://github.com/user-attachments/assets/504253e3-c584-4412-b757-aab8bf80e280)
 
-Neighborfood is a community-driven application designed to help people living in close-knit neighborhoods build stronger connections. Whether it’s organizing block parties, sharing recipes, or lending a hand to a neighbor, Neighborfood makes it easy to engage with your local community in meaningful ways.
+Neighborfood is a community-driven application designed to help people living in close-knit neighborhoods build stronger connections. Whether giving food, sharing recipes, or lending a hand to a neighbor, Neighborfood makes it easy to engage with your local community in meaningful ways.
 
 #### Features
 
