@@ -30,8 +30,6 @@ const Home: NextPage<Props> = ({items}) => {
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
 
-
-
   useEffect(() => {
     console.log(items)
   }, [items])
@@ -45,36 +43,35 @@ const Home: NextPage<Props> = ({items}) => {
       </Head>
       <Flex>
 
-        <Flex w={'20%'}>
-          <Sidenav/>
-        </Flex>
-
-        <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
-      
-        <Flex  h={'40vh'} flexDir={'row'}>
-
-          <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
-            <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
-            <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
-            <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
-            <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
+          <Flex w={'20%'}>
+            <Sidenav/>
           </Flex>
-
           
-          
+          <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
+            <Flex  h={'40vh'} flexDir={'row'}>
+
+              <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
+                <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
+                <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
+                <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
+                <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
+              </Flex>
+
+            </Flex>
+          
+            <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
+              <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
+              <Input maxW={'300px'} border={'2px solid black'} />
+            </Flex>     
+
+            <Flex py={'5vh'} justifyContent={'space-around'}>
+              {items.map((item) => (
+                <ItemComponent item={item}/>
+              ))}  
+            </Flex>
+          
         </Flex>
-        
-          <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
-            <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
-            <Input maxW={'300px'} border={'2px solid black'} />
-          </Flex>        
-        <Flex py={'5vh'} justifyContent={'space-around'}>
-          {items.map((item) => (
-            <ItemComponent item={item}/>
-          ))}  
-        </Flex>
-      </Flex>
 
       </Flex>
     </>

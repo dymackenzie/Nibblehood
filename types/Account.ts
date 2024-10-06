@@ -1,14 +1,16 @@
 export default class Account {
     UUID: string;
     name: string;
-    location: Map<string, number>;
-    neighbourhood: string;
+    location: {latitude: number, longitude: number};
+    neighborhood: string;
+    neighborhoodName: string;
 
-    constructor(uuid: string, name: string, location: Map<string, number>, neighbourhood: string) {
+    constructor(uuid: string, name: string, location: {latitude: number, longitude: number}, neighborhood: string, neighborhoodName: string) {
         this.UUID = uuid;
         this.name = name;
         this.location = location;
-        this.neighbourhood = neighbourhood;
+        this.neighborhood = neighborhood;
+        this.neighborhoodName = neighborhoodName;
     }
 }
 
@@ -19,12 +21,13 @@ export const accountConverter = {
             UUID: account.UUID,
             location: account.location,
             name: account.name,
-            neighborhood: account.neighborhood
+            neighborhood: account.neighborhood,
+            neighborhoodName: account.neighborhoodName
             };
     },
     fromFirestore: (snapshot: any, options: any) => {
         const data = snapshot.data(options);
         return new Account(data.UUID, data.name, 
-            data.location, data.neighborhood);
+            data.location, data.neighborhood, data.neighborhoodName);
     }
 };

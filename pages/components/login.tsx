@@ -4,6 +4,11 @@ import { useRouter } from 'next/navigation';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/firebase/clientApp';
 
+import Neighborhood from '@/types/Neighborhood';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '@/firebase/clientApp';
+import { neighborhoodConverter } from '@/types/Neighborhood';
+
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

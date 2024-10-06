@@ -1,9 +1,9 @@
 export default class Neighborhood {
     name: string;
-    location: Map<string, number>;
+    location: {latitude: number, longitude: number};
     points: number;
 
-    constructor(name: string, location: Map<string, number>, points: number) {
+    constructor(name: string, location: {latitude: number, longitude: number}, points: number) {
         this.name = name;
         this.location = location;
         this.points = points;
