@@ -9,6 +9,8 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // "success" or "error"
 
   // Function to get the user's current location
   const getLocation = () => {
@@ -47,15 +49,17 @@ const SignUp = () => {
       // Store the user in Firestore with location details
       await setDoc(doc(db, 'users', user.UUID).withConverter(accountConverter), user);
 
-      console.log('User created and location stored:', user.UUID);
-
       // reset fields
       setEmail('');
       setName('');
       setPassword('');
+
+      setMessage('User signed up successfully!');
+      setMessageType('success');
       
-    } catch (error) {
-      console.error('Error during sign up:', error);
+    } catch (error: any) {
+      setMessage('Error during sign up: ' + error.message);
+      setMessageType('error');
     }
   };
 
@@ -94,6 +98,11 @@ const SignUp = () => {
     <div style={styles.container}>
       <form onSubmit={handleSignUp} style={styles.form}>
         <h2 style={styles.heading}>Sign Up</h2>
+        {message && (
+          <p style={messageType === 'error' ? styles.error : styles.success}>
+            {message}
+          </p>
+        )}
         <input
           type="name"
           placeholder="Name"
@@ -169,6 +178,10 @@ const styles = {
   },
   error: {
     color: 'red',
+    marginBottom: '1rem',
+  },
+  success: {
+    color: 'green',
     marginBottom: '1rem',
   },
 };
