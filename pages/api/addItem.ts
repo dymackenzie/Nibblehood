@@ -4,6 +4,7 @@ import 'firebase/firestore';
 import Item from "@/types/Item";
 import firebase from "firebase/compat/app";
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getAuth } from "firebase/auth";
 
 const DEFAULT_POINTS = 5;
 
@@ -27,7 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const description = data.description;
     const image = data.image;
     const claimed = data.claimed;
-    const userId = firebase.auth().currentUser?.uid;
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const userId = user?.uid;
     if (userId) {
         const userRef = doc(db, 'users', userId);
         const docSnap = await getDoc(userRef);
