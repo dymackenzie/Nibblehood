@@ -1,6 +1,8 @@
 import { db } from "@/firebase/clientApp"
+import axios from "axios";
 import { collection, query, where, getDocs, DocumentData } from "firebase/firestore"
 import { WhereFilterOp } from "firebase/firestore";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 /**
  * Fetches filtered documents from a Firestore collection.
@@ -12,32 +14,64 @@ import { WhereFilterOp } from "firebase/firestore";
  * @param converter - A converter to convert the field into an object
  * @returns A promise that resolves to an array of filtered documents
  */
-export async function getFilteredItems(
-    collectionName: string,
-    field: string,
-    operator: WhereFilterOp,
-    value: any,
-    converter: any
-  ): Promise<DocumentData[]> {
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    console.log("received addItem request");
+    const data = req.body;
+    const collectionName = data.collectionName;
+    const field = data.field;
+    const operator = data.operator;
+    const value = data.value;
+    const converter = data.converter;
     try {
-      // Reference to the collection
-      const collectionRef = collection(db, collectionName).withConverter(converter);
-      
-      // Create the query
-      const q = query(collectionRef, where(field, operator, value));
-  
-      // Execute the query and fetch documents
-      const querySnapshot = await getDocs(q);
-      
-      // Map over the documents and return data with document IDs
-      const filteredItems = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-  
-      return filteredItems;
+        // Reference to the collection
+        const collectionRef = collection(db, collectionName).withConverter(converter);
+
+        // Create the query
+        const q = query(collectionRef, where(field, operator, value));
+
+        // Execute the query and fetch documents
+        const querySnapshot = await getDocs(q);
+
+        // Map over the documents and return data with document IDs
+        const filteredItems = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        return res.json(filteredItems);
     } catch (error) {
-      console.error("Error fetching filtered items:", error);
-      throw new Error(`Failed to fetch filtered items from ${collectionName}`);
+        console.error("Error fetching filtered items:", error);
+        // throw new Error(`Failed to fetch filtered items from ${collectionName}`);
+        res.status(500).end();
     }
-  }
+}
+// export async function getFilteredItems(
+//     collectionName: string,
+//     field: string,
+//     operator: WhereFilterOp,
+//     value: any,
+//     converter: any
+// ): Promise<DocumentData[]> {
+//     try {
+//         // Reference to the collection
+//         const collectionRef = collection(db, collectionName).withConverter(converter);
+
+//         // Create the query
+//         const q = query(collectionRef, where(field, operator, value));
+
+//         // Execute the query and fetch documents
+//         const querySnapshot = await getDocs(q);
+
+//         // Map over the documents and return data with document IDs
+//         const filteredItems = querySnapshot.docs.map(doc => ({
+//             id: doc.id,
+//             ...doc.data()
+//         }));
+
+//         return filteredItems;
+//     } catch (error) {
+//         console.error("Error fetching filtered items:", error);
+//         throw new Error(`Failed to fetch filtered items from ${collectionName}`);
+//     }
+// }
