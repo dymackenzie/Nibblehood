@@ -1,24 +1,20 @@
 import Head from "next/head";
-import Image from "next/image";
-import localFont from "next/font/local";
 //import styles from "@/styles/Home.module.css";
-import { GetServerSideProps, NextPage } from "next";
-import axios from "axios";
-import { Button, Flex, Heading, Input, SimpleGrid, Text } from "@chakra-ui/react";
 import ItemType from "@/types/Item";
+import { Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import axios from "axios";
+import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import { GoogleMap } from "@react-google-maps/api";
-import { itemConverter } from "@/types/Item";
 
-import dynamic from 'next/dynamic'
 import ItemComponent from "@/components/ItemComponent";
 import Sidenav from "@/components/Sidenav";
+import { auth } from "@/firebase/clientApp";
+import dynamic from 'next/dynamic';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Test = dynamic(() => import('@/components/Test'), {
   ssr: false
 })
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "@/firebase/clientApp";
 
 const Home: NextPage = () => {
 
@@ -67,16 +63,12 @@ const Home: NextPage = () => {
           
           <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
-            <Flex  h={'40vh'} flexDir={'row'}>
+            <Flex  h={'40vh'} flexDir={'row'} backgroundImage={'/green_grid.png'}>
 
               <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
                 <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
                 <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
                 <Text mt={'20px'} fontSize={'4xl'}>Turn your excess food into smiles next door</Text>                
-              </Flex>
-
-              <Flex>
-
               </Flex>
 
             </Flex>
