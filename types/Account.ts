@@ -1,10 +1,10 @@
 export default class Account {
     UUID: string;
     name: string;
-    location: [number, number];
+    location: Map<string, number>;
     neighbourhood: string;
 
-    constructor(uuid: string, name: string, location: [number, number], neighbourhood: string) {
+    constructor(uuid: string, name: string, location: Map<string, number>, neighbourhood: string) {
         this.UUID = uuid;
         this.name = name;
         this.location = location;
