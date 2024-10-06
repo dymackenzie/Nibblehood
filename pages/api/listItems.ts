@@ -1,9 +1,7 @@
-import { db } from "@/firebase/clientApp"
+import { db, auth } from "@/firebase/clientApp"
 import { itemConverter } from "@/types/Item";
-import axios from "axios";
-import { getAuth } from "firebase/auth";
-import { collection, query, where, getDocs, DocumentData, doc, getDoc } from "firebase/firestore"
-import { WhereFilterOp } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth"
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore"
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 /**
@@ -19,13 +17,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received listItems request");
-    const auth = getAuth();
-    const user = auth.currentUser;
+
     const collectionName = "items";
     const field = "neighborhood";
-    const operator = "==";
-    if (user) {
-        const userRef = doc(db, 'users', user.uid);
+    const operator = "=="
+    if (req.body.uid) {
+        const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
             console.log("Document data:", docSnap.data());

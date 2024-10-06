@@ -6,7 +6,7 @@ import { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
 import { Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import Item from "@/types/Item";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 
 import dynamic from 'next/dynamic'
@@ -31,12 +31,32 @@ const Home: NextPage = () => {
 
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
+  const [items, setItems] = useState<Item[]>([]);
+  const [uid, setUID] = useState("");
 
-  /*
+
   useEffect(() => {
-    axios.get('http://localhost:3000/api/listItems').then((res) => console.log(res.data))
-  }, [])
-  */
+    if (uid.length > 0) {
+      axios.post('http://localhost:3000/api/listItems', { uid: uid }).then((res) => setItems(res.data))
+    }
+
+  }, [uid])
+
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUID(user.uid)
+        //setUser(user);
+        //getUserProfile(user.uid);
+      } else {
+        //setUser(null);
+        //setProfile(null);
+        console.log("logged out!")
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
 
   return (
@@ -75,38 +95,17 @@ const Home: NextPage = () => {
 
         </Flex>
 
-        <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
-          <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
-          <Input maxW={'300px'} border={'2px solid black'} />
-        </Flex>
+
         <Flex py={'5vh'} justifyContent={'space-around'}>
-          {/*items.map((item) => (
-              <ItemComponent item={item} />
-            ))*/}
+          {items.map((item) => (
+            <ItemComponent item={item} />
+          ))}
         </Flex>
-        <LogIn />
       </Flex>
 
     </>
   );
 }
 
-/*
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  try {
-    console.log('attempting to fetch items from server');
-    const res = await axios.get("http://localhost:3000/api/listItems") //update to post later with location
-    const items: Item[] = res.data
-    return {
-      props: {
-        items
-      }
-    }
-  } catch (err) {
-    return {
-      notFound: true
-    }
-  }
-}
-*/
+
 export default Home;

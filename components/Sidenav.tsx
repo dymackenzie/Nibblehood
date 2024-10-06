@@ -8,9 +8,6 @@ import PostFood from "./PostFood"
 
 const Sidenav = () => {
     const router = useRouter()
-
-    
-
     return (
         <Flex h={'90vh'} flexDir={'column'} alignItems={'center'} w={'100%'} borderRight={'3px solid black'}>
             <Flex w={"100%"} h={'10vh'} mt={'30px'}>

@@ -3,7 +3,6 @@ import User from "@/components/User"
 import { Card, CardBody, CardHeader, Flex, Text, Heading, Image, HStack, Box, Divider } from "@chakra-ui/react"
 
 const Neighbourhood = () => {
-
     return (
         <Flex>
             <Flex w={'20%'}>

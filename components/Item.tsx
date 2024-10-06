@@ -54,7 +54,7 @@ const Item = ({item}: {item: ItemType}) => {
           <ModalBody>
             <Divider borderColor={'black'}/>
             <Flex justifyContent={'space-around'}>
-                <Text>{item.account.name}</Text>
+                <Text>{item.account}</Text>
                 <Text>Listed 10min ago</Text>
                 <Text>Cooked 1hr ago</Text>
             </Flex>
