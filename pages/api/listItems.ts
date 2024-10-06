@@ -1,6 +1,8 @@
 import { db } from "@/firebase/clientApp"
+import { itemConverter } from "@/types/Item";
 import axios from "axios";
-import { collection, query, where, getDocs, DocumentData } from "firebase/firestore"
+import { getAuth } from "firebase/auth";
+import { collection, query, where, getDocs, DocumentData, doc, getDoc } from "firebase/firestore"
 import { WhereFilterOp } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
@@ -16,33 +18,46 @@ import type { NextApiRequest, NextApiResponse } from 'next';
  */
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    console.log("received addItem request");
-    const data = req.body;
-    const collectionName = data.collectionName;
-    const field = data.field;
-    const operator = data.operator;
-    const value = data.value;
-    const converter = data.converter;
-    try {
-        // Reference to the collection
-        const collectionRef = collection(db, collectionName).withConverter(converter);
+    console.log("received listItems request");
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const collectionName = "items";
+    const field = "neighborhood";
+    const operator = "=="
+    if (user) {
+        const userRef = doc(db, 'users', user.uid);
+        const docSnap = await getDoc(userRef);
+        if (docSnap.exists()) {
+            console.log("Document data:", docSnap.data());
+            const value = docSnap.get("neighborhood");
+            try {
+                // Reference to the collection
+                const collectionRef = collection(db, collectionName).withConverter(itemConverter);
 
-        // Create the query
-        const q = query(collectionRef, where(field, operator, value));
+                // Create the query
+                const q = query(collectionRef, where(field, operator, value));
 
-        // Execute the query and fetch documents
-        const querySnapshot = await getDocs(q);
+                // Execute the query and fetch documents
+                const querySnapshot = await getDocs(q);
 
-        // Map over the documents and return data with document IDs
-        const filteredItems = querySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+                // Map over the documents and return data with document IDs
+                const filteredItems = querySnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
 
-        return res.json(filteredItems);
-    } catch (error) {
-        console.error("Error fetching filtered items:", error);
-        // throw new Error(`Failed to fetch filtered items from ${collectionName}`);
+                return res.json(filteredItems);
+            } catch (error) {
+                console.error("Error fetching filtered items:", error);
+                // throw new Error(`Failed to fetch filtered items from ${collectionName}`);
+                res.status(500).end();
+            }
+        } else {
+            console.log('user doesnt exist');
+            res.status(500).end();
+        }
+    } else {
+        console.log('user not logged in');
         res.status(500).end();
     }
 }

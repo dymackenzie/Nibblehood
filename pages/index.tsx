@@ -14,7 +14,7 @@ type Props = {
   items: Item[]
 }
 
-const Home: NextPage<Props> = ({items}) => {
+const Home: NextPage<Props> = ({ items }) => {
 
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
@@ -32,33 +32,34 @@ const Home: NextPage<Props> = ({items}) => {
         <meta name="description" content="to bring close communities closer" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      
-      <Flex justifyContent={'space-around'} alignItems={'center'}  w={'100vw'} h={'100vh'}>
-      {items.map((item) => (
-        <Flex flexDir={'column'} bgColor={'red'} w={'25vw'} alignItems={'center'}>
-          <Text>{item.name}</Text>
-          <Image src={item.image} width={100} height={100} alt={"food pic"}/>        
-          <Text size={'sm'}>{item.description}</Text>
-          <Button>Claim!</Button>
-          <Text>{item.points}</Text>
-          <Text>{new Date(item.time).toDateString()}</Text>
-          <Text>{item.account.name}</Text>
-        </Flex>          
-      ))}
+
+      <Flex justifyContent={'space-around'} alignItems={'center'} w={'100vw'} h={'100vh'}>
+        {items.map((item) => (
+          <Flex flexDir={'column'} bgColor={'red'} w={'25vw'} alignItems={'center'}>
+            <Text>{item.name}</Text>
+            <Image src={item.image} width={100} height={100} alt={"food pic"} />
+            <Text size={'sm'}>{item.description}</Text>
+            <Button>Claim!</Button>
+            <Text>{item.points}</Text>
+            <Text>{new Date(item.time).toDateString()}</Text>
+            <Text>{item.account}</Text>
+          </Flex>
+        ))}
       </Flex>
-        
+
     </>
   );
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   try {
+    console.log('attempting to fetch items from server');
     const res = await axios.get("http://localhost:3000/api/listItems") //update to post later with location
     const items: Item[] = res.data
     return {
       props: {
         items
-      }        
+      }
     }
   } catch (err) {
     return {
