@@ -18,8 +18,6 @@ const Test = dynamic(() => import('@/components/Test'), {
 })
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "@/firebase/clientApp";
-import SignUp from "./components/signup";
-import LogIn from "./components/login";
 
 
 
@@ -34,14 +32,13 @@ const Home: NextPage = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [uid, setUID] = useState("");
 
-
   useEffect(() => {
     if (uid.length > 0) {
-      axios.post('http://localhost:3000/api/listItems', { uid: uid }).then((res) => setItems(res.data))
+      axios.post('http://localhost:3000/api/listItems', {uid: uid}).then((res) => setItems(res.data))
     }
-
+    
   }, [uid])
-
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -58,7 +55,6 @@ const Home: NextPage = () => {
     return () => unsubscribe();
   }, []);
 
-
   return (
     <>
       <Head>
@@ -68,40 +64,36 @@ const Home: NextPage = () => {
       </Head>
       <Flex>
 
-        <Flex w={'20%'}>
-          <Sidenav />
-        </Flex>
+          <Flex w={'20%'}>
+            <Sidenav/>
+          </Flex>
+          
+          <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
-        <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
+            <Flex  h={'40vh'} flexDir={'row'}>
 
-          <Flex h={'40vh'} flexDir={'row'}>
+              <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
+                <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
+                <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
+                <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
+                <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
+              </Flex>
 
-            <Flex flexDir={'column'} justifyContent={'center'} w={'100%'}>
-              <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
-              <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
-              <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
-              <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
             </Flex>
+          
+            <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
+              <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
+              <Input maxW={'300px'} border={'2px solid black'} />
+            </Flex>     
 
+
+            <Flex py={'5vh'} justifyContent={'space-around'}>
+            {items.map((item) => (
+              <ItemComponent item={item} />
+            ))}
           </Flex>
-
-          <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
-            <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
-            <Input maxW={'300px'} border={'2px solid black'} />
-          </Flex>
-
-
-
-
+          </Flex>                    
         </Flex>
-
-
-        <Flex py={'5vh'} justifyContent={'space-around'}>
-          {items.map((item) => (
-            <ItemComponent item={item} />
-          ))}
-        </Flex>
-      </Flex>
 
     </>
   );
