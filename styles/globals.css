@@ -35,6 +35,12 @@ a {
   text-decoration: none;
 }
 
+/* Add Leaflet CSS for map styling */
+.leaflet-container {
+  width: 100%;
+  height: 500px; /* Adjust this to the height you need */
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
