@@ -6,10 +6,12 @@ export default class Item {
     claimed: Boolean;
     points: number;
     account: string;
+    accountName: string;
     neighborhood: string
 
     constructor(name: string, description: string, image: string,
-        time: Date, claimed: Boolean, points: number, account: string, neighborhood: string) {
+        time: Date, claimed: Boolean, points: number, account: string, 
+        accountName: string, neighborhood: string) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -17,6 +19,7 @@ export default class Item {
         this.claimed = claimed;
         this.points = points;
         this.account = account;
+        this.accountName = accountName;
         this.neighborhood = neighborhood;
     }
 }
@@ -32,13 +35,15 @@ export const itemConverter = {
             claimed: item.claimed,
             points: item.points,
             account: item.account,
+            accountName: item.accountName,
             neighborhood: item.neighborhood
         };
     },
     fromFirestore: (snapshot: any, options: any) => {
         const data = snapshot.data(options);
         return new Item(data.name, data.description, data.image,
-            data.time.toDate(), data.claimed, data.points, data.account, data.neighborhood
+            data.time.toDate(), data.claimed, data.points, 
+            data.account, data.accountName, data.neighborhood
         );
     }
 };

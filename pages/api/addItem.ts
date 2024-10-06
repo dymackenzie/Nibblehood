@@ -47,6 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             claimed,
             DEFAULT_POINTS,
             userId,
+            docSnap.get("name"),
             neighborhoodId)
 
         // Add a new document in collection "items"
