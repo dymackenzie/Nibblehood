@@ -1,6 +1,8 @@
-import firebase, { FirebaseError } from "firebase/app";
+import firebase, { getApps, getApp, initializeApp } from "firebase/app";
 import "firebase/auth";
+import { getAuth } from "firebase/auth";
 import "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 
 const clientCredentials = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -11,8 +13,13 @@ const clientCredentials = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-if (!firebase.getApps.length) {
-    firebase.initializeApp(clientCredentials);
-}
+// init app
+const app = !getApps().length ? initializeApp(clientCredentials) : getApp();
 
-export default firebase;
+// init auth
+const auth = getAuth(app);
+
+// init database
+const db = getFirestore(app);
+
+export {app, auth, db, firebase};
