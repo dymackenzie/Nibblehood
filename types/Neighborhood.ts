@@ -9,3 +9,18 @@ export default class Neighborhood {
         this.points = points;
     }
 }
+
+// convert the data
+export const neighborhoodConverter = {
+    toFirestore: (neighborhood: any) => {
+        return {
+            name: neighborhood.name,
+            location: neighborhood.location,
+            points: neighborhood.points
+            };
+    },
+    fromFirestore: (snapshot: any, options: any) => {
+        const data = snapshot.data(options);
+        return new Neighborhood(data.name, data.location, data.points);
+    }
+};

@@ -1,7 +1,8 @@
 'use client'
 import { useState } from 'react';
-import { doSignInWithEmailAndPassword } from '../api/auth';
 import { useRouter } from 'next/navigation';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase/clientApp';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
@@ -10,7 +11,7 @@ const LogIn = () => {
 
   const handleSubmit = async () => {
     try {
-        await doSignInWithEmailAndPassword(email, password);
+        useSignInWithEmailAndPassword(auth);
         setEmail('');
         setPassword('');
         router.push('/');

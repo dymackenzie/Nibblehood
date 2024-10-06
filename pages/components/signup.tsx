@@ -5,21 +5,40 @@ import { doCreateUserWithEmailAndPassword } from '../api/auth';
 const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     try {
-        await doCreateUserWithEmailAndPassword(email, password);
-        setEmail('');
-        setPassword('');
+        // get location of user
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(storePosition)
+        } else {
+          console.error("Geolocation is not supported by this browser.");
+        }
     } catch (e) {
         console.error(e);
     }
   };
 
+  const storePosition = async (position: any) => {
+    let location:[number, number] = [position.coords.latitude, position.coords.longitude];
+    await doCreateUserWithEmailAndPassword(email, password, name, location);
+    setEmail('');
+    setPassword('');
+  }
+
   return (
     <div style={styles.container}>
       <form onSubmit={handleSubmit} style={styles.form}>
         <h2 style={styles.heading}>Sign Up</h2>
+        <input
+          type="name"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          style={styles.input}
+          required
+        />
         <input
           type="email"
           placeholder="Email"
