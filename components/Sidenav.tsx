@@ -15,13 +15,13 @@ const Sidenav = () => {
 
     return (
         <Flex pos={'fixed'} h={'90vh'} flexDir={'column'} alignItems={'center'} w={'19%'} borderRight={'2px solid #F1F1F1'}>
-            <Flex w={"100%"} h={'10vh'} mt={'30px'}>
+            <Flex w={"100%"} h={'4vh'} mt={'30px'}>
                 <Button onClick={() => router.push('/')} borderRadius={'100px'} justifyContent={'left'} w={'80%'} bgColor={isHome ? '#f1f1f1' : 'white'} color={isHome ? '#606060' : 'black'} ml={'10%'} leftIcon={<Icon as={IoHomeSharp}/>}>Home</Button>
             </Flex>
-            <Flex w={"100%"} h={'10vh'} mt={2}>
+            <Flex w={"100%"} h={'4vh'} mt={2}>
                 <Button onClick={() => router.push('/neighbourhood')} borderRadius={'100px'} justifyContent={'left'} w={'80%'} bgColor={isNeighbourhood ? '#f1f1f1' : 'white'} color={isNeighbourhood ? '#606060' : 'black'} ml={'10%'} leftIcon={<Icon as={GiVillage}/>}>Neighbourhood</Button>
             </Flex>
-            <Flex w={"100%"} h={'10vh'} mt={2}>
+            <Flex w={"100%"} h={'4vh'} mt={2}>
                 <Button onClick={() => router.push('/leaderboard')} borderRadius={'100px'} justifyContent={'left'} w={'80%'} bgColor={isLeaderboard ? '#f1f1f1' : 'white'} color={isLeaderboard ? '#606060' : 'black'} ml={'10%'} leftIcon={<Icon as={IoMdTrophy}/>}>Leaderboards</Button>
             </Flex>
             <Flex position={'fixed'} bottom={'20px'}>
