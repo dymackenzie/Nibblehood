@@ -60,7 +60,7 @@ const PostFood = () => {
     <>
       <Button bottom={0} pos={'relative'} onClick={onOpen} colorScheme='teal' size='lg'>Post Food</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose} size={'lg'}>
+      <Modal isOpen={isOpen} onClose={() => {onClose(); setFile('')}} size={'lg'}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader textAlign="center" fontSize="2xl" fontWeight="bold">
@@ -106,8 +106,9 @@ const PostFood = () => {
                         alt='Selected item image'
                       />
                     )} */}
-                    <Box p={4} borderWidth="1px" borderRadius="lg" boxShadow="lg" maxW="400px" mx="auto">
-                      <FileUploadButton onChange={handleChange} />
+                        <Flex mt={'20px'} w={'100%'} justifyContent={'center'}>
+                            <FileUploadButton onChange={handleChange} />
+                        </Flex>
 
                       {file && (
                         <Box mt={4} textAlign="center">
@@ -132,7 +133,7 @@ const PostFood = () => {
                           </Box>
                         </Box>
                       )}
-                    </Box>
+                    
                   </Stack>
                 </form>
               </Box>

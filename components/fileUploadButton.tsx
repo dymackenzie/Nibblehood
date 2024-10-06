@@ -15,8 +15,7 @@ function FileUploadButton({ onChange }: { onChange: (e: React.ChangeEvent<HTMLIn
             <Button
                 colorScheme='teal'
                 onClick={handleButtonClick}
-                size='md'
-                mb={4} // Add spacing
+                size='md'                
             >
                 Choose File
             </Button>
@@ -25,6 +24,7 @@ function FileUploadButton({ onChange }: { onChange: (e: React.ChangeEvent<HTMLIn
                 ref={inputRef}
                 onChange={onChange}
                 display="none" // Hide the default input element
+                accept="image/*"
             />
         </Box>
     );
