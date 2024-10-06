@@ -46,8 +46,8 @@ const Navbar = () => {
                 <Text ml={2}>{user?.neighborhoodName}</Text>
             </Flex>       
             {     
-            user ? <Flex w={'18%'} justifyContent={'space-between'} alignItems={'center'}>
-                <Flex alignItems={'center'}>
+            user ? <Flex w={'18%'} justifyContent={'right'} alignItems={'center'}>
+                <Flex alignItems={'center'} marginRight={'2rem'}>
                     <IoPerson fontSize={'20px'}/>
                     <Text ml={3} fontSize={'2xl'}>{user.name}</Text>
                 </Flex>
