@@ -46,20 +46,27 @@ const Home: NextPage = () => {
       </Head>
       <Flex>
 
-        <Flex w={'20%'}>
-          <Sidenav />
-        </Flex>
+          <Flex w={'20%'}>
+            <Sidenav/>
+          </Flex>
+          
+          <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
-        <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
+            <Flex  h={'40vh'} flexDir={'row'}>
 
-          <Flex h={'40vh'} flexDir={'row'}>
+              <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
+                <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
+                <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
+                <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
+                <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
+              </Flex>
 
-            <Flex flexDir={'column'} justifyContent={'center'} w={'100%'}>
-              <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
-              <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
-              <Text fontSize={'4xl'}>Turn your excess food into smiles next door</Text>
-              <Button width={'200px'} mt={'20px'} size={'lg'} p={5}>Join Now!</Button>
             </Flex>
+          
+            <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
+              <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
+              <Input maxW={'300px'} border={'2px solid black'} />
+            </Flex>     
 
 
 
@@ -77,7 +84,6 @@ const Home: NextPage = () => {
           </Flex>
         </Flex>
 
-      </Flex>
     </>
   );
 }

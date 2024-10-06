@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase/clientApp';
 import { setDoc, doc, collection, getDocs } from 'firebase/firestore';
-import Neighborhood, { neighborhoodConverter } from '@/types/Neighborhood';
-import Account from '@/types/Account';
+import { neighborhoodConverter } from '@/types/Neighborhood';
+import Account, { accountConverter } from '@/types/Account';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -37,20 +37,16 @@ const SignUp = () => {
 
       // get the user's location
       const location = await getLocation();
-      let castLocation = (location as Map<string, number>);
+      let castLocation = location as {latitude: number, longitude: number};
 
       // find neighborhood closest
       let neighborhood = await FindNeighborhood(castLocation);
 
       // create user
-      let user = new Account(userCredential.user.uid, name, castLocation, neighborhood);
+      let user = new Account(userCredential.user.uid, name, castLocation, neighborhood.id, neighborhood.name, 0);
 
       // Store the user in Firestore with location details
-      await setDoc(doc(db, 'users', user.UUID), {
-        name: user.name,
-        location,
-        neighborhood: user.neighbourhood
-      });
+      await setDoc(doc(db, 'users', user.UUID).withConverter(accountConverter), user);
 
       console.log('User created and location stored:', user.UUID);
 
@@ -65,9 +61,8 @@ const SignUp = () => {
   };
 
   // algorithm to find closest neighborhood to user
-  const FindNeighborhood = async (location: Map<string, number>) => {
+  const FindNeighborhood = async (location: {latitude: number, longitude: number}) => {
     // init variables
-    let neighborhoodId = "";
     let neighborhoods:any[] = [];
     // get collection
     const neighborhoodCol = collection(db, "neighborhoods").withConverter(neighborhoodConverter);
@@ -85,15 +80,15 @@ const SignUp = () => {
     // algorithm to find nearest neighborhood
     let closestIndex = 0;
     for (let i = 1; i < neighborhoods.length; i++) {
-        if (distanceSquared([location.get("latitude"), location.get("longitude")], 
-          [neighborhoods[i].location.get("latitude"), neighborhoods[i].location.get("longitude")]) < 
-            distanceSquared([location.get("latitude"), location.get("longitude")], 
-            [neighborhoods[closestIndex].location.get("latitude"), neighborhoods[closestIndex].location.get("longitude")])) {
+        if (distanceSquared([location.latitude, location.longitude], 
+          [neighborhoods[i].location.latitude, neighborhoods[i].location.longitude]) < 
+            distanceSquared([location.latitude, location.longitude], 
+            [neighborhoods[closestIndex].location.latitude, neighborhoods[closestIndex].location.longitude])) {
                 closestIndex = i;
             }
     }
 
-    return neighborhoods[closestIndex].id;
+    return {id: neighborhoods[closestIndex].id, name: neighborhoods[closestIndex].name};
   }
 
   return (
