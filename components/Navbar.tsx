@@ -6,6 +6,7 @@ import { auth } from "@/firebase/clientApp"
 import axios from "axios"
 import Account from "@/types/Account"
 import { IoLogOutOutline, IoPerson } from "react-icons/io5"
+import { MdStars } from "react-icons/md"
 
 const Navbar = () => {
     const router = useRouter()
@@ -18,7 +19,7 @@ const Navbar = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/getUser', {uid: uid}).then((res) => setUser(res.data))
+            axios.post('/api/getUser', {uid: uid}).then((res) => setUser(res.data))
         }
     }, [uid])
 
@@ -35,27 +36,29 @@ const Navbar = () => {
       }, []);
 
     return (
-        <Flex borderBottom={'2px solid #F1F1F1'} 
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            padding={'1rem'}
-            position={'relative'}
-            h={'10vh'}
+        <Flex borderBottom={'2px solid #5F802C'}                                     
+            h={'10vh'}            
             >
-            <Flex justifyContent={'center'} alignItems={'center'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
-                <Image h={'100%'} src={'https://static-00.iconduck.com/assets.00/nextjs-icon-2048x1234-pqycciiu.png'}/>
+            <Flex justifyContent={'left'} alignItems={'left'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
+                <Image h={'100%'} src={'/nibblehood_logo.svg'} padding={'2rem'}/>
             </Flex>
-            <Flex alignItems={'center'} w={'60%'} fontSize={'2xl'}>
+            <Flex justifyContent={'left'} alignItems={'center'} w={'60%'} fontSize={'2xl'}>
                 <FaLocationDot/>
                 <Text ml={2}>{user?.neighborhoodName}</Text>
             </Flex>       
             {     
-            user ? <Flex w={'18%'} justifyContent={'space-between'} alignItems={'center'}>
-                <Flex alignItems={'center'}>
-                    <IoPerson fontSize={'20px'}/>
-                    <Text ml={3} fontSize={'2xl'}>{user.name}</Text>
+            user ? <Flex w={'18%'} justifyContent={'right'} alignItems={'center'} fontSize={'xl'}>
+                <Flex>
+                    <Flex alignItems={'center'} marginRight={'2rem'}>
+                        <IoPerson />
+                        <Text ml={3} >{user.name}</Text>
+                    </Flex>
+                    <Flex alignItems={'center'} marginRight={'2rem'}>
+                        <MdStars />
+                        <Text ml={3} >{user.points}</Text>
+                    </Flex>
                 </Flex>
-                <IconButton as={IoLogOutOutline} onClick={logout} size={'md'} p={1} aria-label="logout"/>
+                <IconButton as={IoLogOutOutline} variant={'ghost'} onClick={logout} size={'md'} p={1} aria-label="logout"/>
                 </Flex> :
             <><Flex justifyContent={'center'} alignItems={'center'} w={'10%'} fontSize={'md'}>
                 <Button onClick={() => router.push('/login')} variant={'ghost'}>Log In</Button>

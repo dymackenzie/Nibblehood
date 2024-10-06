@@ -19,15 +19,12 @@ const Neighbourhood = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/listFiltered', {
+            axios.post('/api/listFiltered', {
                 uid: uid,
                 collectionName: "items",
                 field: "neighborhood",
                 operator: "==",
-                value: "neighborhood",
-                // field2: "claimed",
-                // operator2: "==",
-                // value2: true
+                value: "neighborhood"
             }).then((res) => setRecentActivity(res.data))
         }
     }, [uid])

@@ -1,5 +1,5 @@
 import ItemType from "@/types/Item"
-import { Button, Flex, Text, Image, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Divider, Icon, CardBody, Card, HStack } from "@chakra-ui/react"
+import { Button, Flex, Text, Image, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Divider, Icon, CardBody, Card, HStack, useToast } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { FaBookmark, FaWalking } from "react-icons/fa"
 import { HiOutlineDotsHorizontal } from "react-icons/hi"
@@ -20,15 +20,24 @@ const distance = 0.1
 const ItemComponent = ({ item }: { item: ItemType }) => {
   const [uid, setUID] = useState("");
 
+  const toast = useToast()
+
+  const [claimed, setClaimed] = useState(false)
+
   async function handleClaim() {
     console.log("handling claim button");
     if (uid.length > 0) {
       let anyItem = item as any;
-      await axios.post("http://localhost:3000/api/updatePoints", {
+      let temp = await axios.post("/api/updatePoints", {
         itemId: anyItem.id,
         points: item.points,
         userId: uid
       });
+
+      if (temp) {
+        toast({title: 'Success!', description: 'Claimed Item', status: 'success'})
+        setClaimed(true)
+      }
       
     } else {
       console.log('user not authenticated');
@@ -48,7 +57,7 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
 
   return (
           
-    <Card flexDir={'column'} alignItems={'center'} w={'100%'} pt={3} cursor={'pointer'}>
+    <Card flexDir={'column'} alignItems={'center'} w={'100%'} pt={3}>
             <CardBody>
             <Image borderRadius={'lg'} w={'100%'} h={'55%'} aspectRatio={1.3} objectFit={'cover'} src={item.image}/>        
             <Text fontSize={'h4'} fontWeight={'bold'} mt={'10px'}>{item.name}</Text>
@@ -69,7 +78,7 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
             </HStack>
             <Text my={'20px'} fontSize={'body'} color={'gray1'}>{item.description}</Text>
             <Flex w={'100%'} justifyContent={'right'}>
-                <Button size={'sm'} colorScheme="green" onClick={handleClaim}>Claim</Button>
+                <Button disabled={claimed} size={'sm'} colorScheme="green" onClick={handleClaim}>Claim</Button>
             </Flex>
             </CardBody>
             
