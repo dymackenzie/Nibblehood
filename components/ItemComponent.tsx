@@ -4,16 +4,45 @@ import dynamic from "next/dynamic"
 import { FaBookmark, FaWalking } from "react-icons/fa"
 import { HiOutlineDotsHorizontal } from "react-icons/hi"
 import { IoMdShare } from "react-icons/io"
+import { auth } from "@/firebase/clientApp"
+import { useEffect, useState } from "react"
+import axios from "axios"
 const Test = dynamic(() => import('./Test'), {
   ssr: false
 })
 //import Image from "next/image"
 
-//temp dummy data
+//temporary dummy data
 const distance = 0.1
 
-
 const ItemComponent = ({ item }: { item: ItemType }) => {
+  const [uid, setUID] = useState("");
+
+  async function handleClaim() {
+    console.log("handling claim button");
+    if (uid.length > 0) {
+      let anyItem = item as any;
+      await axios.post("http://localhost:3000/api/updatePoints", {
+        itemId: anyItem.id,
+        points: item.points,
+        userId: uid
+      });
+      onClose();
+    } else {
+      console.log('user not authenticated');
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+        if (user) {
+          setUID(user.uid)
+        } else {
+          console.log("logged out!")
+        }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -75,7 +104,7 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
 
           <ModalFooter justifyContent={'center'}>
 
-            <Button colorScheme={'green'}>Claim</Button>
+            <Button onClick={handleClaim} colorScheme={'green'}>Claim</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

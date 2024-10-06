@@ -8,6 +8,7 @@ import Item, { itemConverter } from "@/types/Item"
 
 const Neighbourhood = () => {
 
+    const [user, setUser] = useState<Account>()
     const [recentActivity, setRecentActivity] = useState<Item[]>([]);
     const [topContributors, setTopContributors] = useState<Account[]>([]);
     const [uid, setUID] = useState("");
@@ -24,9 +25,9 @@ const Neighbourhood = () => {
         }
       }, [uid])
 
-      useEffect(() => {
+    useEffect(() => {
         if (uid.length > 0) {
-          axios.post('http://localhost:3000/api/listFiltered', {
+            axios.post('http://localhost:3000/api/listFiltered', {
             uid: uid,
             collectionName: "users",
             field: "neighborhood",
@@ -34,7 +35,7 @@ const Neighbourhood = () => {
             value: "neighborhood"
         }).then((res) => setTopContributors(res.data))
         }
-      }, [uid])
+    }, [uid])
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {

@@ -27,11 +27,7 @@ const Navbar = () => {
           if (user) {
             setUID(user.uid)      
             console.log(user.uid)      
-            //setUser(user);
-            //getUserProfile(user.uid);
           } else {
-            //setUser(null);
-            //setProfile(null);
             console.log("logged out!")
           }
         });
@@ -39,14 +35,19 @@ const Navbar = () => {
       }, []);
 
     return (
-        <Flex h={'10vh'} borderBottom={'2px solid #F1F1F1'}>
+        <Flex borderBottom={'2px solid #F1F1F1'} 
+            justifyContent={'space-between'}
+            alignItems={'center'}
+            padding={'1rem'}
+            position={'relative'}
+            h={'10vh'}
+            >
             <Flex justifyContent={'center'} alignItems={'center'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
                 <Image h={'100%'} src={'https://static-00.iconduck.com/assets.00/nextjs-icon-2048x1234-pqycciiu.png'}/>
             </Flex>
             <Flex alignItems={'center'} w={'60%'} fontSize={'2xl'}>
                 <FaLocationDot/>
                 <Text ml={2}>{user?.neighborhoodName}</Text>
-
             </Flex>       
             {     
             user ? <Flex w={'18%'} justifyContent={'space-between'} alignItems={'center'}>
@@ -54,7 +55,7 @@ const Navbar = () => {
                     <IoPerson fontSize={'20px'}/>
                     <Text ml={3} fontSize={'2xl'}>{user.name}</Text>
                 </Flex>
-                <IconButton as={IoLogOutOutline} onClick={logout} size={'md'} p={1}/>
+                <IconButton as={IoLogOutOutline} onClick={logout} size={'md'} p={1} aria-label="logout"/>
                 </Flex> :
             <><Flex justifyContent={'center'} alignItems={'center'} w={'10%'} fontSize={'md'}>
                 <Button onClick={() => router.push('/login')} variant={'ghost'}>Log In</Button>

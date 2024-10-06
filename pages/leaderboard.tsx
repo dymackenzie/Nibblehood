@@ -19,7 +19,7 @@ const Leaderboard = () => {
             uid: uid,
             collectionName: "neighborhoods",
             field: "points",
-            direction: "asc"
+            direction: "desc"
         }).then((res) => setNeighborhoods(res.data))
         }
       }, [uid])
@@ -30,7 +30,7 @@ const Leaderboard = () => {
             uid: uid,
             collectionName: "users",
             field: "points",
-            direction: "asc"
+            direction: "desc"
         }).then((res) => setTopContributors(res.data))
         }
       }, [uid])
