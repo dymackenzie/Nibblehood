@@ -15,8 +15,11 @@ const theme = extendTheme({
     body: "13px"
   },
   fonts: {
-    heading: `"ppeditorial"`,
-    body: `"ppeditorial"`
+    heading: `"roboto"`,
+    body: `"roboto"`
+  },
+  colors: {
+    gray1: "#606060"
   }
 })
 
