@@ -63,9 +63,8 @@ const Leaderboard = () => {
                             </Flex>
                         ))}
                     </HStack>
-                        <TableContainer>
-                        <Table variant='simple'>
-                            <TableCaption>Neighbourhood Rankings</TableCaption>
+                        <TableContainer pb={5}>
+                        <Table variant='simple'>                            
                             <Thead>
                             <Tr>
                                 <Th>Rank</Th>
