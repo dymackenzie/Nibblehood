@@ -1,4 +1,4 @@
-import { db } from "@/firebase/clientApp";
+import { auth, db } from "@/firebase/clientApp";
 import { doc, getDoc, setDoc, serverTimestamp, updateDoc, FieldValue } from "firebase/firestore";
 import 'firebase/firestore';
 import Item from "@/types/Item";
@@ -18,7 +18,6 @@ const DEFAULT_POINTS = 5;
 //     neighborhood: string
 // }
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received addItem request");
     const data = req.body;
@@ -27,18 +26,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const description = data.description;
     const image = data.image;
     const claimed = data.claimed;
-    const userId = firebase.auth().currentUser?.uid;
+    const userId = auth.currentUser?.uid;
     if (userId) {
         const userRef = doc(db, 'users', userId);
         const docSnap = await getDoc(userRef);
 
         let neighborhoodId;
         if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
             neighborhoodId = docSnap.get("neighborhood");
         } else {
             // docSnap.data() will be undefined in this case
-            console.log("No such user!");
+            console.error("no such user!");
         }
         const toAdd = new Item(
             name,

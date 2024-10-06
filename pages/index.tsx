@@ -105,22 +105,5 @@ const Home: NextPage = () => {
   );
 }
 
-/*
-export const getServerSideProps: GetServerSideProps<Props> = async () => {
-  try {
-    console.log('attempting to fetch items from server');
-    const res = await axios.get("http://localhost:3000/api/listItems") //update to post later with location
-    const items: Item[] = res.data
-    return {
-      props: {
-        items
-      }
-    }
-  } catch (err) {
-    return {
-      notFound: true
-    }
-  }
-}
-*/
+
 export default Home;

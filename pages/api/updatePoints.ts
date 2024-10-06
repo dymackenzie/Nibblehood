@@ -4,16 +4,31 @@ import { db } from "@/firebase/clientApp";
 import type { NextApiRequest, NextApiResponse } from 'next'
 import Account, { accountConverter } from "@/types/Account";
 import Neighborhood, { neighborhoodConverter } from "@/types/Neighborhood";
+import Item, { itemConverter } from "@/types/Item";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received updatsPoints request");
     const data = req.body;
-    const userIdReceived = data.userIdReceived;
+    const itemId = data.itemId;
     const points = data.points;
     // console.log(data);
     const userId = firebase.auth().currentUser?.uid;
     if (userId) {
-         // update points in user
+        
+        // mark item as claimed
+        let itemDocRef = doc(db, "items", itemId).withConverter(itemConverter);
+        await updateDoc(itemDocRef, {
+            "claimed": true
+        })
+        // get user id of whoever posted
+        let itemSnap = await getDoc(itemDocRef);
+        let userIdReceived = "";
+        if (itemSnap.exists()) {
+            let item = itemSnap.data() as Item;
+            userIdReceived = item.account;
+        }
+
+        // update points in user
         let docRef = doc(db, "users", userId).withConverter(accountConverter);
         let userSnap = await getDoc(docRef);
         let addedPoints = 0;

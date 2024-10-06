@@ -1,6 +1,3 @@
-import { FieldValue, Timestamp } from "firebase/firestore";
-import Account from "./Account";
-
 export default class Item {
     name: string;
     description: string;
