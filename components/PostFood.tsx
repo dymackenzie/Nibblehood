@@ -3,7 +3,7 @@ import React, { useState } from "react";
 // import { doAddItem } from "../api/addItem";
 import firebase from "firebase/compat/app";
 import axios from "axios";
-import SignUp from "@/pages/components/signup";
+import SignUp from "@/pages/signup";
 import { getAuth } from "firebase/auth";
 
 const PostFood = () => {
@@ -34,7 +34,7 @@ const PostFood = () => {
           description: description,
           image: file,
           claimed: false,
-
+          uid: user.uid
         });
 
     } else {//redirect to login
