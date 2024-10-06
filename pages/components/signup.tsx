@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth, db } from '@/firebase/clientApp';
 import { setDoc, doc, collection, getDocs } from 'firebase/firestore';
 import { neighborhoodConverter } from '@/types/Neighborhood';
-import Account from '@/types/Account';
+import Account, { accountConverter } from '@/types/Account';
 
 const SignUp = () => {
   const [email, setEmail] = useState('');
@@ -43,15 +43,10 @@ const SignUp = () => {
       let neighborhood = await FindNeighborhood(castLocation);
 
       // create user
-      let user = new Account(userCredential.user.uid, name, castLocation, neighborhood.id, neighborhood.name);
+      let user = new Account(userCredential.user.uid, name, castLocation, neighborhood.id, neighborhood.name, 0);
 
       // Store the user in Firestore with location details
-      await setDoc(doc(db, 'users', user.UUID), {
-        name: user.name,
-        location,
-        neighborhood: user.neighborhood,
-        neighborhoodName: user.neighborhoodName
-      });
+      await setDoc(doc(db, 'users', user.UUID).withConverter(accountConverter), user);
 
       console.log('User created and location stored:', user.UUID);
 
