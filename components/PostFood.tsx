@@ -13,9 +13,14 @@ const PostFood = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState('');
-  const [item, setItem] = useState(new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", ""))
+  const displayName = getAuth().currentUser?.displayName;
+  const [item, setItem] = useState(getItem());
 
   const { isOpen, onOpen, onClose } = useDisclosure()
+
+  function getItem() {
+    return new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", displayName ? displayName : "Username", "");
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const files = e.target.files;
@@ -59,7 +64,7 @@ const PostFood = () => {
           <ModalCloseButton />
           <ModalBody>
             <Flex flexDirection='row'>
-              <Flex>
+              <Flex flexGrow='2'>
                 {/* <Flex bgColor={'green'} w={'40%'}>hi</Flex>
               <Flex bgColor={'red'} w={'60%'}>hi</Flex> */}
                 {/* <div className="App"> */}
@@ -69,14 +74,14 @@ const PostFood = () => {
                     id="nameInput"
                     placeholder="Name"
                     value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => { setName(e.target.value); setItem(getItem()); }}
                     style={styles.input}
                     required />
                   <Textarea
                     id="textInput"
                     placeholder="Description"
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => { setDescription(e.target.value); setItem(getItem()); }}
                     // style={styles.description}
                     required />
 
@@ -86,7 +91,7 @@ const PostFood = () => {
                 </form>
                 {/* </div> */}
               </Flex>
-              <Flex >
+              <Flex flexGrow='1'>
                 <ItemComponent item={item} />
               </Flex>
             </Flex>
