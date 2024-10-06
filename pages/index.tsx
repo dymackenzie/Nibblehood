@@ -84,7 +84,6 @@ const Home: NextPage = () => {
           </Flex>
         </Flex>
 
-      </Flex>
     </>
   );
 }
