@@ -1,5 +1,5 @@
 import ItemType from "@/types/Item"
-import { Button, Flex, Text, Image, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Divider, Icon, CardBody, Card } from "@chakra-ui/react"
+import { Button, Flex, Text, Image, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Divider, Icon, CardBody, Card, HStack } from "@chakra-ui/react"
 import dynamic from "next/dynamic"
 import { FaBookmark, FaWalking } from "react-icons/fa"
 import { HiOutlineDotsHorizontal } from "react-icons/hi"
@@ -7,6 +7,8 @@ import { IoMdShare } from "react-icons/io"
 import { auth } from "@/firebase/clientApp"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { FaLocationDot } from "react-icons/fa6"
+import { IoTimeSharp } from "react-icons/io5"
 const Test = dynamic(() => import('./Test'), {
   ssr: false
 })
@@ -27,7 +29,7 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
         points: item.points,
         userId: uid
       });
-      onClose();
+      
     } else {
       console.log('user not authenticated');
     }
@@ -42,73 +44,36 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
         }
     });
     return () => unsubscribe();
-  }, []);
-
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  }, []);  
 
   return (
-    <>
-      <Card flexDir={'column'} alignItems={'center'} w={'30%'} pt={3} pb={'30px'} cursor={'pointer'} onClick={onOpen}>
-        <CardBody>
-          <Image borderRadius={'lg'} w={'100%'} aspectRatio={1.3} objectFit={'cover'} src={item.image} />
-          <Text fontSize={'2xl'} fontWeight={'bold'}>{item.name}</Text>
-          <Text size={'sm'}>{item.description}</Text>
-          <Flex justifyContent={'space-around'} fontSize={'xl'} bottom={1} pos={'absolute'}>
-            <Text mr={10}>{distance} km</Text>
-            <Flex alignItems={'center'}>
-              <FaWalking />
-              <Text>{(distance * 12).toFixed()} min</Text>
+          
+    <Card flexDir={'column'} alignItems={'center'} w={'100%'} pt={3} cursor={'pointer'}>
+            <CardBody>
+            <Image borderRadius={'lg'} w={'100%'} h={'55%'} aspectRatio={1.3} objectFit={'cover'} src={item.image}/>        
+            <Text fontSize={'h4'} fontWeight={'bold'} mt={'10px'}>{item.name}</Text>
+            
+            <HStack spacing={3} color={'gray1'} py={2}>                    
+                <Flex alignItems={'center'}>
+                    <FaLocationDot/>                        
+                    <Text>{(distance * 12).toFixed()} min</Text>
+                </Flex>     
+                <Flex alignItems={'center'}>
+                    <FaWalking/>                        
+                    <Text>{(distance * 12).toFixed()} min</Text>
+                </Flex>     
+                <Flex alignItems={'center'}>
+                    <IoTimeSharp/>                        
+                    <Text>{(distance * 12).toFixed()} min</Text>
+                </Flex>     
+            </HStack>
+            <Text my={'20px'} fontSize={'body'} color={'gray1'}>{item.description}</Text>
+            <Flex w={'100%'} justifyContent={'right'}>
+                <Button size={'sm'} colorScheme="green" onClick={handleClaim}>Claim</Button>
             </Flex>
-          </Flex>
-        </CardBody>
-
-      </Card>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Image borderRadius={'lg'} w={'100%'} aspectRatio={1.3} objectFit={'cover'} src={item.image} />
-            <Flex justifyContent={'space-between'}>
-              <Text>{item.name}</Text>
-              <Flex justifyContent={'center'} alignItems={'center'}>
-                <Icon as={FaBookmark} />
-                <Icon as={IoMdShare} />
-                <Icon as={HiOutlineDotsHorizontal} />
-              </Flex>
-            </Flex>
-          </ModalHeader>
-          <ModalCloseButton />
-
-          <ModalBody>
-            <Divider borderColor={'black'} />
-            <Flex justifyContent={'space-around'}>
-              <Text>ACCOUNT</Text>
-              <Text>Listed 10min ago</Text>
-              <Text>Cooked 1hr ago</Text>
-            </Flex>
-            <Divider borderColor={'black'} />
-            <Text>Description</Text>
-            <Text>aweoifjoiafjoafjoadavlkcdnvlangl;ajf;ajf;ejf;asifjaoe;jckvlk;ajl;</Text>
-
-            <Text>Ingredients</Text>
-            <Text>ejfije * eifjiejf * eifjeifj * fejifej * fejifje</Text>
-
-            <Text>Location</Text>
-            <Flex justifyContent={'center'} flexDir={'column'} alignItems={'center'}>
-              <Test />
-              <Text>89 N Surrey, Delta</Text>
-            </Flex>
-
-          </ModalBody>
-
-          <ModalFooter justifyContent={'center'}>
-
-            <Button onClick={handleClaim} colorScheme={'green'}>Claim</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
+            </CardBody>
+            
+        </Card>
 
   )
 }

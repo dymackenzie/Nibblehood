@@ -11,7 +11,7 @@ import { GoogleMap } from "@react-google-maps/api";
 import { itemConverter } from "@/types/Item";
 
 import dynamic from 'next/dynamic'
-import Item from "@/components/Item";
+import ItemComponent from "@/components/ItemComponent";
 import Sidenav from "@/components/Sidenav";
 
 const Test = dynamic(() => import('@/components/Test'), {
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
 
             <SimpleGrid columns={3} py={'5vh'} spacing={3} justifyContent={'space-around'} mr={3}>
             {items.map((item) => (
-              <Item item={item} />
+              <ItemComponent item={item} />
             ))}
           </SimpleGrid>
           </Flex>                    
