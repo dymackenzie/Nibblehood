@@ -12,10 +12,6 @@ import { auth } from "@/firebase/clientApp";
 import dynamic from 'next/dynamic';
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const Test = dynamic(() => import('@/components/Test'), {
-  ssr: false
-})
-
 const Home: NextPage = () => {
 
   // destructure user, loading, and error out of the hook

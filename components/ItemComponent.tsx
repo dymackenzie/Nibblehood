@@ -9,9 +9,6 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { FaLocationDot } from "react-icons/fa6"
 import { IoTimeSharp } from "react-icons/io5"
-const Test = dynamic(() => import('./Test'), {
-  ssr: false
-})
 //import Image from "next/image"
 
 //temporary dummy data

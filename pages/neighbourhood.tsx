@@ -31,7 +31,7 @@ const Neighbourhood = () => {
     //TODO: change to be top residents, not all residents
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/listFiltered', {
+            axios.post('/api/listFiltered', {
                 uid: uid,
                 collectionName: "users",
                 field: "neighborhood",
@@ -43,7 +43,7 @@ const Neighbourhood = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/listOrdered', {
+            axios.post('/api/listOrdered', {
                 uid: uid,
                 direction: "desc",
                 field: "points",
@@ -62,7 +62,7 @@ const Neighbourhood = () => {
 
     useEffect(() => {
         if (uid.length > 0) {
-            axios.post('http://localhost:3000/api/getNeighborhood', {
+            axios.post('/api/getNeighborhood', {
                 uid: uid
             }).then((res) => setNeighborhood(res.data))
         }
@@ -85,7 +85,7 @@ const Neighbourhood = () => {
                 <Sidenav />
             </Flex>
 
-            <Flex flexDir={'column'} w={'80%'} ml={'20px'} mt={'15px'}>
+            <Flex flexDir={'column'} w={'80%'} ml={'20px'} mt={'15px'} pb={5}>
                 <Flex marginLeft={5}>
                     <Heading paddingBottom={-10} fontSize="5xl" mb={5}>{neighborhood?.name}</Heading>
                 </Flex>
@@ -114,14 +114,14 @@ const Neighbourhood = () => {
                                     <Text fontSize="sm">Plate Passes</Text>
                                 </Flex>
                             </Flex>
-                            <Divider />
+                            <Divider borderColor={'rgb(95, 128, 44)'} />
                             <Flex justifyContent={'space-around'} mt={3}>
                                 <Flex flexDir={'column'} alignItems={'center'}>
-                                    <Text fontWeight="bold" fontSize="2xl">680 kg</Text>
+                                    <Text fontWeight="bold" fontSize="2xl">{(neighborhood?.points || 0) / 10} kg</Text>
                                     <Text fontSize="sm">Food Saved</Text>
                                 </Flex>
                                 <Flex flexDir={'column'} alignItems={'center'}>
-                                    <Text fontWeight="bold" fontSize="2xl">95,490</Text>
+                                    <Text fontWeight="bold" fontSize="2xl">{neighborhood?.points}</Text>
                                     <Text fontSize="sm">Points Raised</Text>
                                 </Flex>
                             </Flex>
@@ -142,12 +142,12 @@ const Neighbourhood = () => {
                             {topContributors.slice(0, 5).map((item, index) => (
                                 <Flex key={index} flexDir={'column'} justifyContent={'center'} alignItems={'center'}>
                                     <Image w={"75px"} h={"75px"} objectFit={'cover'} src={"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"} borderRadius={'50%'} />
-                                    <Text fontSize={'md'}>{item.name}</Text>
+                                    <Text fontSize={'md'} mt={'5px'}>{item.name}</Text>
                                 </Flex>
                             ))}
                         </HStack>
-                        <Flex justifyContent={'space-between'} alignItems="center">
-                            <Text fontSize={'xl'} fontWeight={'bold'}>Recent Activity</Text>
+                        <Flex justifyContent={'space-between'} alignItems="center" mt={'30px'}>
+                            <Text fontSize={'2xl'} fontWeight={'bold'}>Recent Activity</Text>
                             <Flex alignItems={'center'}>
                                 <Text fontSize="sm" color="gray.500">See All</Text>
                                 <IconButton aria-label="left" icon={<ChevronLeftIcon />} variant="ghost" />
@@ -158,13 +158,13 @@ const Neighbourhood = () => {
                             {recentActivity.slice(0, 3).map((item, index) => (
                                 <Card key={index} maxW={'200px'} m={2}>
                                     <CardBody pb={1}>
-                                        <Image borderRadius={'lg'} aspectRatio={1.3} objectFit={'cover'} src={item.image} />
-                                        <Divider />
-                                        <Text fontSize={'xl'} fontWeight={'bold'} py={3}>{item.name}</Text>
-                                        <Divider />
-                                        <Flex justifyContent={'space-between'}>
-                                            <Text>{item.accountName}</Text>
-                                            <Text>{item.claimed.toString()}</Text>
+                                        <Image w={"100%"} h={'40%'} borderRadius={'lg'} objectFit={'cover'} src={item.image} />    
+                                        <Flex justifyContent={'center'} pb={3}>
+                                            <Text fontSize={'xl'} fontWeight={'bold'} py={3}>{item.name}</Text>
+                                        </Flex>                                    
+                                        <Divider border={'1px solid rgb(95, 128, 44)'}/>                                        
+                                        <Flex justifyContent={'left'}>
+                                            <Text>{item.accountName}</Text>                                            
                                         </Flex>
                                     </CardBody>
                                 </Card>
