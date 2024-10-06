@@ -83,9 +83,6 @@ const PostFood = () => {
               </form>
               {/* </div> */}
             </Flex>
-            <Flex>
-              <Item item={new } />
-            </Flex>
           </ModalBody>
 
           <ModalFooter>
@@ -108,6 +105,9 @@ const styles = {
 
   },
   description: {
+
+  },
+  input: {
 
   }
 
