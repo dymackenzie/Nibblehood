@@ -5,13 +5,13 @@ import localFont from "next/font/local";
 import { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
 import { Button, Flex, Heading, Input, SimpleGrid, Text } from "@chakra-ui/react";
-import Item from "@/types/Item";
+import ItemType from "@/types/Item";
 import { useEffect, useState } from "react";
 import { GoogleMap } from "@react-google-maps/api";
 import { itemConverter } from "@/types/Item";
 
 import dynamic from 'next/dynamic'
-import ItemComponent from "@/components/ItemComponent";
+import Item from "@/components/Item";
 import Sidenav from "@/components/Sidenav";
 
 const Test = dynamic(() => import('@/components/Test'), {
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
 
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<ItemType[]>([]);
   const [uid, setUID] = useState("");
 
   useEffect(() => {
@@ -89,7 +89,7 @@ const Home: NextPage = () => {
 
             <SimpleGrid columns={3} py={'5vh'} spacing={3} justifyContent={'space-around'} mr={3}>
             {items.map((item) => (
-              <ItemComponent item={item} />
+              <Item item={item} />
             ))}
           </SimpleGrid>
           </Flex>                    
