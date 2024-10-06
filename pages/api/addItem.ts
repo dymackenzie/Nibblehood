@@ -1,23 +1,10 @@
-import { auth, db } from "@/firebase/clientApp";
-import { doc, getDoc, setDoc, serverTimestamp, updateDoc, FieldValue } from "firebase/firestore";
+import { db } from "@/firebase/clientApp";
+import { doc, getDoc, collection, addDoc } from "firebase/firestore";
 import 'firebase/firestore';
 import Item, { itemConverter } from "@/types/Item";
-import firebase from "firebase/compat/app";
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getAuth } from "firebase/auth";
 
 export const DEFAULT_POINTS = 5;
-
-// interface myItem {
-//     name: string,
-//     description: string,
-//     image: string,
-//     time: FieldValue,
-//     claimed: boolean,
-//     points: number,
-//     addedBy: string,
-//     neighborhood: string
-// }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received addItem request");
@@ -36,9 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (docSnap.exists()) {
             neighborhoodId = docSnap.get("neighborhood");
         } else {
-            // docSnap.data() will be undefined in this case
             console.error("no such user!");
         }
+
         const toAdd = new Item(
             name,
             description,
@@ -51,8 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             neighborhoodId)
 
         // Add a new document in collection "items"
-        const docRef = doc(db, "items", name).withConverter(itemConverter);
-        await setDoc(docRef, toAdd);
+        const docRef = collection(db, "items").withConverter(itemConverter);
+        await addDoc(docRef, toAdd);
         res.status(200).end();
     } else {
         res.status(500).end();

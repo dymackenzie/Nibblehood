@@ -12,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
-            console.log("Document data:", docSnap.data());
             res.json(docSnap.data())       
         } else {
             console.log('user doesnt exist');
