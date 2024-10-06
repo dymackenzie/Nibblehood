@@ -51,7 +51,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![product_page_screenshot](https://github.com/user-attachments/assets/504253e3-c584-4412-b757-aab8bf80e280)
+![nibblehood_screenshot_with_color](https://github.com/user-attachments/assets/5004bab0-6406-4584-a805-f7abcb03ff96)
 
 Nibblehood is a community-driven application designed to help people living in close-knit neighborhoods build stronger connections. Whether giving food, sharing recipes, or lending a hand to a neighbor, Nibblehood makes it easy to engage with your local community in meaningful ways.
 
