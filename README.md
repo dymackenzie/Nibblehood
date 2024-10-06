@@ -19,15 +19,16 @@
 
 <!-- PROJECT LOGO -->
 <br />
+
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/user-attachments/assets/7baef221-22fc-4c3d-a268-2700469a3d8e" alt="Logo" width="300" height="80">
   </a>
 
-  <h3 align="center">Neighborfood</h3>
+  <h3 align="center">Nibblehood</h3>
 
   <p align="center">
-    Pass your plate, power your neighbourhood!
+    Pass your plate, power your neighborhood!
   </p>
 </div>
 
@@ -50,9 +51,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+![product_page_screenshot](https://github.com/user-attachments/assets/504253e3-c584-4412-b757-aab8bf80e280)
 
-Neighborfood is a community-driven application designed to help people living in close-knit neighborhoods build stronger connections. Whether it’s organizing block parties, sharing recipes, or lending a hand to a neighbor, Neighborfood makes it easy to engage with your local community in meaningful ways.
+Nibblehood is a community-driven application designed to help people living in close-knit neighborhoods build stronger connections. Whether giving food, sharing recipes, or lending a hand to a neighbor, Nibblehood makes it easy to engage with your local community in meaningful ways.
 
 #### Features
 
@@ -63,7 +64,7 @@ Neighborfood is a community-driven application designed to help people living in
 
 #### Vision
 
-In today’s fast-paced world, it's easy to lose touch with the people living next door. Neighborfood strives to make neighborhoods feel like home again by creating opportunities for neighbors to interact, share, and grow together. By fostering trust and goodwill, the app aims to make local communities closer and more connected.
+In today’s fast-paced world, it's easy to lose touch with the people living next door. Nibblehood strives to make neighborhoods feel like home again by creating opportunities for neighbors to interact, share, and grow together. By fostering trust and goodwill, the app aims to make local communities closer and more connected.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
