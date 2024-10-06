@@ -87,9 +87,9 @@ const Neighbourhood = () => {
 
             <Flex flexDir={'column'} w={'80%'} ml={'20px'} mt={'15px'} pb={5}>
                 <Flex marginLeft={5}>
-                    <Heading paddingBottom={-10} fontSize="5xl" mb={5}>{neighborhood?.name}</Heading>
+                    <Heading fontSize="5xl" mb={5}>{neighborhood?.name}</Heading>
                 </Flex>
-                <Flex paddingTop={-10} >
+                <Flex  >
                     {/* Main Neighborhood Card */}
                     <Card w={'45%'} mt={'20px'} p={5} h={'fit-content'} boxShadow='lg' borderRadius='lg'>
                         <CardHeader>
