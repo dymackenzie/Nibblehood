@@ -96,8 +96,7 @@ const Home: NextPage = () => {
               <ItemComponent item={item} />
             ))}
           </Flex>
-          </Flex>                    
-        </Flex>
+        </Flex>                    
 
     </>
   );
