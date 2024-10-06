@@ -14,7 +14,7 @@ const Sidenav = () => {
     const isLeaderboard = router.pathname === "/leaderboard"
 
     return (
-        <Flex pos={'fixed'} h={'90vh'} flexDir={'column'} alignItems={'center'} w={'19%'} borderRight={'2px solid #F1F1F1'}>
+        <Flex pos={'fixed'} h={'90vh'} flexDir={'column'} alignItems={'center'} w={'19%'} borderRight={'2px solid #5F802C'}>
             <Flex w={"100%"} h={'4vh'} mt={'30px'}>
                 <Button onClick={() => router.push('/')} borderRadius={'100px'} justifyContent={'left'} w={'80%'} bgColor={isHome ? '#f1f1f1' : 'white'} color={isHome ? '#606060' : 'black'} ml={'10%'} leftIcon={<Icon as={IoHomeSharp}/>}>Home</Button>
             </Flex>

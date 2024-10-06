@@ -66,8 +66,8 @@ const Home: NextPage = () => {
               <Flex  h={'40vh'} flexDir={'row'} backgroundImage={'/green_grid.png'}
                 backgroundPosition={'center'}
                 backgroundSize={'cover'}
-                marginLeft={'-3rem'}
-                marginTop={'-3rem'}
+                marginLeft={'-3.3rem'}
+                marginTop={'-3.1rem'}
                 paddingLeft={'5rem'}>
 
                 <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>

@@ -36,7 +36,7 @@ const Navbar = () => {
       }, []);
 
     return (
-        <Flex borderBottom={'2px solid #F1F1F1'}                                     
+        <Flex borderBottom={'2px solid #5F802C'}                                     
             h={'10vh'}            
             >
             <Flex justifyContent={'left'} alignItems={'left'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
