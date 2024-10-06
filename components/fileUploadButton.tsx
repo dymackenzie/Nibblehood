@@ -1,7 +1,14 @@
 import { Button, Input, Box } from "@chakra-ui/react";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-function FileUploadButton({ onChange }: { onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
+import {
+    getDownloadURL,
+    ref as storageRef,
+    uploadBytes,
+  } from "firebase/storage";
+import { storage } from "@/firebase/clientApp";
+
+function FileUploadButton({ updateFile }) {
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const handleButtonClick = () => {
@@ -9,6 +16,29 @@ function FileUploadButton({ onChange }: { onChange: (e: React.ChangeEvent<HTMLIn
             inputRef.current.click(); // Simulate a click on the hidden input
         }
     };
+
+    const [imageUpload, setImageUpload] = useState(null);
+
+    useEffect(() => {
+        if (imageUpload === null) {          
+          return;
+        }
+        const imageRef = storageRef(storage, crypto.randomUUID());
+    
+        uploadBytes(imageRef, imageUpload)
+          .then((snapshot) => {
+            getDownloadURL(snapshot.ref)
+              .then((url) => {
+                console.log(url)
+                updateFile(url)
+              })
+              .catch((error) => {
+                console.log(error)
+              });
+          })
+          .catch((error) => {            
+          });
+      }, [imageUpload])
 
     return (
         <Box>
@@ -22,7 +52,9 @@ function FileUploadButton({ onChange }: { onChange: (e: React.ChangeEvent<HTMLIn
             <Input
                 type="file"
                 ref={inputRef}
-                onChange={onChange}
+                onChange={(e) => {
+                    setImageUpload(e.target.files[0])
+                }}
                 display="none" // Hide the default input element
                 accept="image/*"
             />

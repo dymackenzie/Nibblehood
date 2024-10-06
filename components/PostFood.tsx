@@ -22,15 +22,7 @@ const PostFood = () => {
 
   function getItem() {
     return new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", displayName ? displayName : "Username", "");
-  }
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const files = e.target.files;
-    if (files) {
-      console.log(files);
-      setFile(URL.createObjectURL(files[0]));
-    }
-  }
+  }  
 
   async function handleSubmit() {
     console.log('sending auth check');
@@ -107,7 +99,7 @@ const PostFood = () => {
                       />
                     )} */}
                         <Flex mt={'20px'} w={'100%'} justifyContent={'center'}>
-                            <FileUploadButton onChange={handleChange} />
+                            <FileUploadButton updateFile={setFile} />
                         </Flex>
 
                       {file && (
