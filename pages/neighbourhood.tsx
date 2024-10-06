@@ -5,13 +5,14 @@ import axios from "axios"
 import { auth } from "@/firebase/clientApp"
 import Account, { accountConverter } from "@/types/Account"
 import Item, { itemConverter } from "@/types/Item"
+import Neighborhood from "@/types/Neighborhood"
 
 const Neighbourhood = () => {
 
     const [user, setUser] = useState<Account>()
     const [recentActivity, setRecentActivity] = useState<Item[]>([]);
     const [topContributors, setTopContributors] = useState<Account[]>([]);
-    const [allResidents, setAllResidents] = useState<Account[]>([]);
+    const [neighborhood, setNeighborhood] = useState<Neighborhood>();
     const [uid, setUID] = useState("");
 
     useEffect(() => {
@@ -41,17 +42,13 @@ const Neighbourhood = () => {
         }
     }, [uid])
 
-    // useEffect(() => {
-    //     if (uid.length > 0) {
-    //         axios.post('http://localhost:3000/api/listOrdered', {
-    //         uid: uid,
-    //         collectionName: "users",
-    //         field: "neighborhood",
-    //         operator: "==",
-    //         value: "neighborhood"
-    //     }).then((res) => setTopContributors(res.data))
-    //     }
-    // }, [uid])
+    useEffect(() => {
+        if (uid.length > 0) {
+            axios.post('http://localhost:3000/api/getNeighborhood', {
+                uid: uid
+            }).then((res) => setNeighborhood(res.data))
+        }
+    }, [uid])
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -76,7 +73,7 @@ const Neighbourhood = () => {
                     <Card w={'40%'} mt={'20px'} h={'fit-content'}>
                         <CardHeader>
                             <Flex flexDir={'column'} alignItems={'center'}>
-                                <Text fontSize={'2xl'} fontWeight={'bold'}>Burnaby</Text>
+                                <Text fontSize={'2xl'} fontWeight={'bold'}>{neighborhood?.name}</Text>
                                 <Image src={'https://upload.wikimedia.org/wikipedia/commons/0/00/Burnaby_Metrotown_skyline.jpg'} />
                             </Flex>
                         </CardHeader>
@@ -98,7 +95,7 @@ const Neighbourhood = () => {
                                     <Text>rank</Text>
                                 </Flex>
                                 <Flex flexDir={'column'} w={'100px'}>
-                                    <Text>46</Text>
+                                    <Text>{neighborhood?.points}</Text>
                                     <Text>points</Text>
                                 </Flex>
                             </Flex>
