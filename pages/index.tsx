@@ -25,7 +25,7 @@ type Props = {
   items: Item[]
 }
 
-const Home: NextPage<Props> = ({items}) => {
+const Home: NextPage<Props> = ({ items }) => {
 
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
@@ -80,12 +80,13 @@ const Home: NextPage<Props> = ({items}) => {
 
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   try {
+    console.log('attempting to fetch items from server');
     const res = await axios.get("http://localhost:3000/api/listItems") //update to post later with location
     const items: Item[] = res.data
     return {
       props: {
         items
-      }        
+      }
     }
   } catch (err) {
     return {
