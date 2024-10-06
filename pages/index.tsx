@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import localFont from "next/font/local";
-import styles from "@/styles/Home.module.css";
 import { GetServerSideProps, NextPage } from "next";
 import axios from "axios";
 import { Button, Flex, Text } from "@chakra-ui/react";

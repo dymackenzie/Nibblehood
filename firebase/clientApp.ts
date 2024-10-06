@@ -1,6 +1,7 @@
-import firebase, { getApp, initializeApp } from "firebase/app";
+import { getApps, getApp, initializeApp } from "firebase/app";
 import "firebase/auth";
 import { getAuth } from "firebase/auth";
+import "firebase/firestore";
 import { getFirestore } from "firebase/firestore";
 
 const clientCredentials = {
@@ -11,9 +12,14 @@ const clientCredentials = {
     messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
-const app = !firebase.getApps().length ? initializeApp(clientCredentials) : getApp();
 
-const auth = getAuth(app)
-const db = getFirestore(app);
+// init app
+const app = !getApps().length ? initializeApp(clientCredentials) : getApp();
 
-export { app, auth, db }
+// init auth
+const auth = getAuth(app);
+
+// init database
+const db = getFirestore();
+
+export { app, auth, db };
