@@ -35,11 +35,7 @@ const Navbar = () => {
       }, []);
 
     return (
-        <Flex borderBottom={'2px solid #F1F1F1'} 
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            padding={'1rem'}
-            position={'relative'}
+        <Flex borderBottom={'2px solid #F1F1F1'}                                     
             h={'10vh'}
             >
             <Flex justifyContent={'center'} alignItems={'center'} w={'20%'} fontSize={'xl'} cursor={'pointer'} onClick={() => router.push('/')}>
