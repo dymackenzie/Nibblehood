@@ -1,29 +1,42 @@
 'use client'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/firebase/clientApp';
 
 const LogIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // "success" or "error"
   const router = useRouter();
 
-  const handleSubmit = async () => {
+  const handleLogin = async (e: Event) => {
+    e.preventDefault();
+    setMessage(''); // Reset message
+    setMessageType('');
+
     try {
-        useSignInWithEmailAndPassword(auth);
-        setEmail('');
-        setPassword('');
-        router.push('/');
-    } catch (e) {
-        console.error(e);
+      // Firebase login with email and password
+      await signInWithEmailAndPassword(auth, email, password);
+      setMessageType('success');
+      setMessage('Login successful!');
+      router.push('/');
+    } catch (error: any) {
+      setMessageType('error');
+      setMessage(`Login failed: ${error.message}`);
     }
   };
 
   return (
     <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.form}>
+      <form onSubmit={handleLogin} style={styles.form}>
         <h2 style={styles.heading}>Log In</h2>
+        {message && (
+          <p style={messageType === 'error' ? styles.error : styles.success}>
+            {message}
+          </p>
+        )}
         <input
           type="email"
           placeholder="Email"
@@ -48,7 +61,7 @@ const LogIn = () => {
   );
 };
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     height: '100vh',
     display: 'flex',
@@ -88,6 +101,14 @@ const styles = {
     borderRadius: '4px',
     cursor: 'pointer',
     transition: 'background-color 0.3s',
+  },
+  error: {
+    color: 'red',
+    marginBottom: '1rem',
+  },
+  success: {
+    color: 'green',
+    marginBottom: '1rem',
   },
 };
 

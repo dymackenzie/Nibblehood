@@ -3,8 +3,8 @@ import { collection, query, where, getDocs } from "firebase/firestore"
 import Account from "@/types/Account";
 import Item, { itemConverter } from "@/types/Item";
 
-export const getItemsNeighbourhood = async (user: Account) => {
-    var filteredItems:Item[] = [];
+export async function getItemsNeighbourhood(user: Account) {
+    const filteredItems:Item[] = [];
 
     // get reference to items
     const itemsCol = collection(db, "items").withConverter(itemConverter);
@@ -23,8 +23,8 @@ export const getItemsNeighbourhood = async (user: Account) => {
     return filteredItems;
 }
 
-export const getItemsUser = async (user: Account) => {
-    var filteredItems:Item[] = [];
+export async function getItemsUser(user: Account) {
+    const filteredItems:Item[] = [];
 
     // get reference to items
     const itemsCol = collection(db, "items").withConverter(itemConverter);
