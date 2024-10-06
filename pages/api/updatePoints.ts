@@ -14,6 +14,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (userId) {
         // mark item as claimed
         let itemDocRef = doc(db, "items", itemId).withConverter(itemConverter);
+        // check if item is claimed
+        // if so, then do nothing
+        let checkClaimed = await getDoc(itemDocRef);
+        if (checkClaimed.exists()) {
+            let item = checkClaimed.data() as Item;
+            if (item.claimed) {
+                return;
+            }
+        }
         await updateDoc(itemDocRef, {
             "claimed": true
         })
