@@ -63,18 +63,24 @@ const Home: NextPage = () => {
           
           <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
 
-            <Flex  h={'40vh'} flexDir={'row'} backgroundImage={'/green_grid.png'}>
+              <Flex  h={'40vh'} flexDir={'row'} backgroundImage={'/green_grid.png'}
+                backgroundPosition={'center'}
+                backgroundSize={'cover'}
+                marginLeft={'-3rem'}
+                marginTop={'-3rem'}
+                paddingLeft={'5rem'}>
 
-              <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
-                <Heading fontSize={'6xl'}>Pass Your Plate,</Heading>
-                <Heading fontSize={'6xl'}>Power Your Neighbourhood!</Heading>
-                <Text mt={'20px'} fontSize={'4xl'}>Turn your excess food into smiles next door</Text>                
+                <Flex flexDir={'column'} justifyContent={'center'}  w={'100%'}>
+                  <Heading fontSize={'8xl'} fontFamily={'ppeditorial'} fontWeight={'200'}>Pass Your Plate,</Heading>
+                  <Heading fontSize={'8xl'} fontFamily={'ppeditorial'} fontWeight={'200'}>Power Your Neighbourhood!</Heading>
+                  <Text mt={'20px'} fontSize={'4xl'} fontWeight={'600'} letterSpacing={'1px'}>Turn your excess food into smiles next door.</Text>                
+                </Flex>
+
               </Flex>
-
-            </Flex>
+            
           
             <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
-              <Text fontSize={'4xl'} fontWeight={'bold'}>Available Items</Text>
+              <Text fontSize={'4xl'} fontFamily={'ppeditorial'} fontWeight={'bold'}>Available Items</Text>
               
             </Flex>     
 
