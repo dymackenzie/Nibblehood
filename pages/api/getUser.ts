@@ -15,21 +15,16 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received listItems request");
-<<<<<<<< Updated upstream:pages/api/getUser.ts
-        
-========
     const data = req.body;
     const collectionName = data.collectionName;
     const field = data.field;
     const operator = data.operator;
     const value = data.value;
     const converter = data.converter;
->>>>>>>> Stashed changes:pages/api/listFiltered.ts
     if (req.body.uid) {
         const userRef = doc(db, 'users', req.body.uid);
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
-<<<<<<<< Updated upstream:pages/api/getUser.ts
             console.log("Document data:", docSnap.data());
             res.json(docSnap.data())
             /*
