@@ -25,14 +25,17 @@ type Props = {
   items: Item[]
 }
 
-const Home: NextPage<Props> = ({ items }) => {
+const Home: NextPage = () => {
 
   // destructure user, loading, and error out of the hook
   const [user, loading, error] = useAuthState(auth);
 
+  /*
   useEffect(() => {
-    console.log(items)
-  }, [items])
+    axios.get('http://localhost:3000/api/listItems').then((res) => console.log(res.data))
+  }, [])
+  */
+  
 
   return (
     <>
@@ -65,12 +68,20 @@ const Home: NextPage<Props> = ({ items }) => {
               <Input maxW={'300px'} border={'2px solid black'} />
             </Flex>     
 
-            <Flex py={'5vh'} justifyContent={'space-around'}>
-              {items.map((item) => (
-                <ItemComponent item={item}/>
-              ))}  
-            </Flex>
-          
+
+
+
+          </Flex>
+
+          <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
+            <Text fontSize={'4xl'} fontWeight={'bold'}>Fresh Finds</Text>
+            <Input maxW={'300px'} border={'2px solid black'} />
+          </Flex>
+          <Flex py={'5vh'} justifyContent={'space-around'}>
+            {/*items.map((item) => (
+              <ItemComponent item={item} />
+            ))*/}
+          </Flex>
         </Flex>
 
       </Flex>
@@ -78,6 +89,7 @@ const Home: NextPage<Props> = ({ items }) => {
   );
 }
 
+/*
 export const getServerSideProps: GetServerSideProps<Props> = async () => {
   try {
     console.log('attempting to fetch items from server');
@@ -94,5 +106,5 @@ export const getServerSideProps: GetServerSideProps<Props> = async () => {
     }
   }
 }
-
+*/
 export default Home;

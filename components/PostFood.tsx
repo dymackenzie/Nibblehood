@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
+import { Button, Flex, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react"
 
 const PostFood = () => {
 
@@ -10,11 +10,13 @@ const PostFood = () => {
         
         <Modal isOpen={isOpen} onClose={onClose} size={'full'}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Modal Title</ModalHeader>
+        <ModalContent>          
           <ModalCloseButton />
           <ModalBody>
-            
+            <Flex>
+                <Flex bgColor={'green'} w={'40%'}>hi</Flex>
+                <Flex bgColor={'red'} w={'60%'}>hi</Flex>
+            </Flex>
           </ModalBody>
 
           <ModalFooter>
