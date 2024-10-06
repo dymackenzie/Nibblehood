@@ -1,12 +1,13 @@
+import { FieldValue, Timestamp } from "firebase/firestore";
 import Account from "./Account";
 
 export default interface Item {
     name: string,
     description: string,
     image: string,
-    time: Date,
+    time: FieldValue,
     claimed: Boolean,
     points: number,
-    addedBy: string,
+    account: Account,
     neighborhood: string
 }
