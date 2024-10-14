@@ -1,4 +1,4 @@
-import { collection, query, orderBy, getDocs, QuerySnapshot, DocumentData, doc, getDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, QuerySnapshot, DocumentData } from 'firebase/firestore';
 import { db } from '@/firebase/clientApp';
 import type { NextApiRequest, NextApiResponse } from 'next';
 

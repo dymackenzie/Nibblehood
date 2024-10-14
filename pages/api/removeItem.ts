@@ -11,7 +11,7 @@ import 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    let data = req.body;
+    const data = req.body;
     const userId = data.userId;
     const itemId = data.itemId;
     const itemRef = doc(db, 'items', itemId);

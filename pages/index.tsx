@@ -6,7 +6,7 @@
 
 import Head from "next/head";
 import ItemType from "@/types/Item";
-import { Flex, Heading, Icon, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";

@@ -22,12 +22,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const userId = data.userId;
     if (userId) {
         // mark item as claimed
-        let itemDocRef = doc(db, "items", itemId).withConverter(itemConverter);
+        const itemDocRef = doc(db, "items", itemId).withConverter(itemConverter);
         // check if item is claimed
         // if so, then do nothing
-        let checkClaimed = await getDoc(itemDocRef);
+        const checkClaimed = await getDoc(itemDocRef);
         if (checkClaimed.exists()) {
-            let item = checkClaimed.data() as Item;
+            const item = checkClaimed.data() as Item;
             if (item.claimed) {
                 return;
             }
@@ -37,10 +37,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         })
 
         // get user id of whoever posted
-        let itemSnap = await getDoc(itemDocRef);
+        const itemSnap = await getDoc(itemDocRef);
         let userIdReceived = "";
         if (itemSnap.exists()) {
-            let item = itemSnap.data() as Item;
+            const item = itemSnap.data() as Item;
             userIdReceived = item.account;
         }
 
@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         let userSnap = await getDoc(docRef);
         let addedPoints = 0;
         if (userSnap.exists()) {
-            let user = userSnap.data() as Account;
+            const user = userSnap.data() as Account;
             addedPoints = user.points;
         }
         addedPoints += points;
@@ -59,10 +59,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         // update points in user bought
         docRef = doc(db, "users", userIdReceived).withConverter(accountConverter);
-        let userReceivedSnap = await getDoc(docRef);
+        const userReceivedSnap = await getDoc(docRef);
         addedPoints = 0;
         if (userSnap.exists()) {
-            let user = userReceivedSnap.data() as Account;
+            const user = userReceivedSnap.data() as Account;
             addedPoints = user.points;
         }
         addedPoints += points;
@@ -73,12 +73,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // update points in neighborhood
         userSnap = await getDoc(doc(db, "users", userId).withConverter(accountConverter));
         if (userSnap.exists()) {
-            let user = userSnap.data() as Account;
-            let docRef = doc(db, "neighborhoods", user.neighborhood).withConverter(neighborhoodConverter);
-            let neighborhoodSnap = await getDoc(docRef);
+            const user = userSnap.data() as Account;
+            const docRef = doc(db, "neighborhoods", user.neighborhood).withConverter(neighborhoodConverter);
+            const neighborhoodSnap = await getDoc(docRef);
             addedPoints = 0;
             if (neighborhoodSnap.exists()) {
-                let neighborhood = neighborhoodSnap.data() as Neighborhood;
+                const neighborhood = neighborhoodSnap.data() as Neighborhood;
                 addedPoints = neighborhood.points;
             }
             addedPoints += (points * 2);
