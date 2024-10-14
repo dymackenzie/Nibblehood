@@ -30,7 +30,7 @@ const SignUp = () => {
   };
 
   // function to handle sign up and store location
-  const handleSignUp = async (e: Event) => {
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       // create a user with email and password
