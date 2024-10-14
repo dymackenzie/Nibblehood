@@ -75,8 +75,8 @@ const Home: NextPage = () => {
               <Text fontSize={'4xl'} fontFamily={'ppeditorial'} fontWeight={'bold'}>Available Items</Text>
             </Flex>     
             <SimpleGrid columns={3} py={'5vh'} spacing={3} justifyContent={'space-around'} mr={3}>
-              {items.map((item) => (
-                (!item.claimed) && <ItemComponent item={item} />
+              {items.map((item, index) => (
+                (!item.claimed) && <ItemComponent key={index} item={item} />
               ))}
             </SimpleGrid>
           </Flex>                    

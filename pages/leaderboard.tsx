@@ -61,8 +61,8 @@ const Leaderboard = () => {
                 <Flex flexDir={'column'} mt={'30px'}>
                     <Text fontSize={'lg'} fontWeight={'bold'}>Top City Contributers</Text>
                     <HStack>
-                        {topContributors.slice(0, 5).map((item) => (
-                            <Flex flexDir={'column'} justifyContent={'center'} alignItems={'center'} p={'20px'}>
+                        {topContributors.slice(0, 5).map((item, index) => (
+                            <Flex key={index} flexDir={'column'} justifyContent={'center'} alignItems={'center'} p={'20px'}>
                                 <Image w={"100px"} aspectRatio={1} objectFit={'cover'} src={"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"} borderRadius={'50%'}/>
                                 <Text fontSize={'lg'} mt={'5px'}>{item.name}</Text>
                             </Flex>
@@ -79,7 +79,7 @@ const Leaderboard = () => {
                         </Thead>
                         <Tbody>
                             {neighborhoods.slice(0, 10).map((item, index) => (
-                                <Tr>
+                                <Tr key={index}>
                                     <Td>{index + 1}</Td>
                                     <Td>{item.name}</Td>
                                     <Td isNumeric>{item.points}</Td>
