@@ -1,28 +1,11 @@
 <a id="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
-<!-- [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url] -->
-
-
-
 <!-- PROJECT LOGO -->
 <br />
 
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://github.com/user-attachments/assets/7baef221-22fc-4c3d-a268-2700469a3d8e" alt="Logo" width="300" height="80">
+    <img src="https://github.com/user-attachments/assets/f61a2471-5b24-4afa-a024-6ea710968963" alt="Logo" width="300" height="200">
   </a>
 
   <h3 align="center">Nibblehood</h3>
@@ -65,15 +48,15 @@ In today’s fast-paced world, it's easy to lose touch with the people living ne
 
 #### How we built it
 
-We started with some mockups on Figma, fleshing out our idea as we thought of data and class structures. Once we had an idea of our software structure, we began a Next.js project, with React and chakra-ui to power our front-end, Node.js, and Firebase to work the back-end, using Firebase Firestore as our database.
+We started with some mockups on Figma, fleshing out our idea as we thought of data and class structures. Once we had an idea of our software structure, we began a Next.js project. We implemented our idea with React and chakra-ui as tools to power our front-end, and Node.js and Firebase (Firestore, Firebase Authentication, Firebase Storage) to work the back-end.
 
 #### Challenges we ran into
 
-One of the more prominent challenges we encountered was how difficult it was to create the front-end design from the Figma file. As a result, our working web app does not have all of the features and designs of our Figma design. This was a bit of a letdown as the look of our web app did not match our expectations.
+One of the more prominent challenges we encountered was creating the front-end design from the Figma file. As a result, our working web app does not have all of the features and designs of our Figma design. This was a bit of a letdown, as the look of our web app did not match our expectations.
 
 #### What we learned
 
-For our team, this was one of our first hackathons, and we were really proud of the product that we outputted. With one designer in our group, it was a good learning experience in terms of the designer-developer dynamics for all of us. Throughout the whole hackathon process, we learned more about database acquisition, design to front-end transformation, and handling REST API calls.
+This was one of our team's first hackathons, and we were really proud of the product we produced. With one designer in our group, it was a good learning experience in terms of the designer-developer dynamics for all of us. Throughout the whole hackathon process, we learned more about database acquisition, design to front-end transformation, and handling REST API calls.
 
 ### Built With
 
