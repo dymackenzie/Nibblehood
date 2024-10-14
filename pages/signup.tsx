@@ -145,7 +145,6 @@ const styles = {
   },
   form: {
     display: 'flex',
-    flexDirection: 'column',
     padding: '2rem',
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
