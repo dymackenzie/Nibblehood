@@ -10,7 +10,7 @@ const LogIn = () => {
   const [messageType, setMessageType] = useState(''); // "success" or "error"
   const router = useRouter();
 
-  const handleLogin = async (e: Event) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // reset message
     setMessage('');
