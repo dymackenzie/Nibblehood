@@ -1,6 +1,5 @@
 import ItemType from "@/types/Item"
-import { Button, Flex, Text, Image, Heading, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Divider, Icon, CardBody, Card, HStack } from "@chakra-ui/react"
-import dynamic from "next/dynamic"
+import { Button, Flex, Text, Image, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, useDisclosure, Divider, Icon, CardBody, Card, HStack } from "@chakra-ui/react"
 import { FaBookmark, FaWalking } from "react-icons/fa"
 import { FaLocationDot } from "react-icons/fa6"
 import { HiOutlineDotsHorizontal } from "react-icons/hi"
@@ -8,10 +7,6 @@ import { IoMdShare } from "react-icons/io"
 import { IoTimeSharp } from "react-icons/io5"
 import { auth } from "@/firebase/clientApp"
 import axios from "axios"
-const Test = dynamic(() => import('./Test'), {
-    ssr: false
-});
-//import Image from "next/image"
 
 //temp dummy data
 const distance = 0.1
@@ -23,6 +18,7 @@ const Item = ({item}: {item: ItemType}) => {
       console.log("handling claim button");
       const user = auth.currentUser;
       if (user) {
+        // if user is authenticated, update the points of the user
         const res = await axios.post("/api/updatePoints", {
             itemId: item,
             points: item.points,
@@ -98,7 +94,6 @@ const Item = ({item}: {item: ItemType}) => {
 
             <Text>Location</Text>
             <Flex justifyContent={'center'} flexDir={'column'} alignItems={'center'}>
-                <Test/>
                 <Text>89 N Surrey, Delta</Text>
             </Flex>
             

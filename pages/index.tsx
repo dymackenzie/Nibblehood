@@ -1,24 +1,24 @@
+/**
+ * @file index.tsx, the main page of the app.
+ * 
+ * The main page of the app, where users can see available items in their neighborhood.
+ */
+
 import Head from "next/head";
-//import styles from "@/styles/Home.module.css";
 import ItemType from "@/types/Item";
-import { Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import { Flex, Heading, Icon, SimpleGrid, Text } from "@chakra-ui/react";
 import axios from "axios";
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
-
 import ItemComponent from "@/components/ItemComponent";
 import Sidenav from "@/components/Sidenav";
 import { auth } from "@/firebase/clientApp";
-import dynamic from 'next/dynamic';
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const Home: NextPage = () => {
-
-  // destructure user, loading, and error out of the hook
-  const [user, loading, error] = useAuthState(auth);
   const [items, setItems] = useState<ItemType[]>([]);
   const [uid, setUID] = useState("");
 
+  // filter items by neighborhood of current user
   useEffect(() => {
     if (uid.length > 0) {
       axios.post('/api/listFiltered', {
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
 
   }, [uid])
 
-
+  // get the current user's id
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
@@ -50,15 +50,13 @@ const Home: NextPage = () => {
         <title>Nibblehood</title>
         <meta name="description" content="to bring close communities closer" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/nibblehood_icon.png"/>
       </Head>
       <Flex>
-
           <Flex w={'20%'}>
             <Sidenav/>
           </Flex>
-          
           <Flex flexDir={'column'} w={'80%'} ml={'40px'} mt={'50px'}>
-
               <Flex  h={'40vh'} flexDir={'row'} backgroundImage={'/green_grid.png'}
                 backgroundPosition={'center'}
                 backgroundSize={'cover'}
@@ -73,21 +71,16 @@ const Home: NextPage = () => {
                 </Flex>
 
               </Flex>
-            
-          
             <Flex w={'95%'} mt={'80px'} justifyContent={'space-between'}>
               <Text fontSize={'4xl'} fontFamily={'ppeditorial'} fontWeight={'bold'}>Available Items</Text>
-              
             </Flex>     
-
-
             <SimpleGrid columns={3} py={'5vh'} spacing={3} justifyContent={'space-around'} mr={3}>
-            {items.map((item) => (
-              (!item.claimed) && <ItemComponent item={item} />
-            ))}
-          </SimpleGrid>
+              {items.map((item) => (
+                (!item.claimed) && <ItemComponent item={item} />
+              ))}
+            </SimpleGrid>
           </Flex>                    
-        </Flex>       
+        </Flex> 
     </>
   );
 }

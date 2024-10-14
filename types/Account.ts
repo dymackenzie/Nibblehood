@@ -1,3 +1,15 @@
+/**
+ * Account.ts, a TypeScript file that defines the Account class and its converter.
+ * 
+ * Structure:
+ * - UUID: unique identifier for the account
+ * - name: name of the account
+ * - location: latitude and longitude of the account
+ * - neighborhood: reference to the neighborhood id
+ * - neighborhoodName: name of the neighborhood
+ * - points: amount of points the account has
+ */
+
 export default class Account {
     UUID: string;
     name: string;

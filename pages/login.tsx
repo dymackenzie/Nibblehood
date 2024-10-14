@@ -12,7 +12,8 @@ const LogIn = () => {
 
   const handleLogin = async (e: Event) => {
     e.preventDefault();
-    setMessage(''); // Reset message
+    // reset message
+    setMessage('');
     setMessageType('');
 
     try {
@@ -20,6 +21,8 @@ const LogIn = () => {
       await signInWithEmailAndPassword(auth, email, password);
       setMessageType('success');
       setMessage('Login successful!');
+
+      // redirect to home page
       router.push('/');
     } catch (error: any) {
       setMessageType('error');

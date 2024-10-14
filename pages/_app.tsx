@@ -3,6 +3,8 @@ import "@/styles/globals.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import "../styles/font.css"
+
+// extend the theme to include font sizes and fonts
 const theme = extendTheme({
   fontSizes: {
     h1: "63px",

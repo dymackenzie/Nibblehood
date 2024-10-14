@@ -1,3 +1,7 @@
+/**
+ * @file User.tsx, a TypeScript file that defines the User functional component.
+ */
+
 import { Flex, Image, Text } from "@chakra-ui/react"
 
 const User = ({name}:{name:string}) => {

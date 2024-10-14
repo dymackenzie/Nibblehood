@@ -1,3 +1,11 @@
+/**
+ * @file computeDistance.ts, a TypeScript file that defines a function that computes the distance between two coordinates.
+ * 
+ * @param coord1 location of first coordinate
+ * @param coord2 location of second coordinate
+ * @returns distance bewteen both coordinates in kilometers 
+ */
+
 export default function computeDistanceInKm(coord1: { latitude: number, longitude: number }, coord2: { latitude: number, longitude: number }) {
     function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
         const toRadians = (degree: number) => degree * (Math.PI / 180);

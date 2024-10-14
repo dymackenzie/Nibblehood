@@ -10,6 +10,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
  * @param direction - The sort direction, 'asc' for ascending or 'desc' for descending
  * @returns A promise that resolves to an array of ordered documents
  */
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log("received listOrdered request");
   const data = req.body;
@@ -18,16 +19,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const collectionName = data.collectionName;
   if (req.body.uid) {
     try {
-      // Reference to the collection
+      // reference to the collection
       const collectionRef = collection(db, collectionName);
 
-      // Create the query with ordering
+      // create the query with ordering
       const q = query(collectionRef, orderBy(field, direction));
 
-      // Execute the query and fetch documents
+      // execute the query and fetch documents
       const querySnapshot: QuerySnapshot<DocumentData> = await getDocs(q);
 
-      // Map over the documents and return data with document IDs
+      // map over the documents and return data with document IDs
       const orderedItems = querySnapshot.docs.map(doc => ({
         ...doc.data(),
         id: doc.id

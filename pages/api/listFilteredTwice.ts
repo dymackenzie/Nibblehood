@@ -29,16 +29,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (docSnap.exists()) {
             const valueSnap = docSnap.get(value);
             try {
-                // Reference to the collection
+                // reference to the collection
                 const collectionRef = collection(db, collectionName);
 
-                // Create the query
+                // create the query
                 const q = query(collectionRef, where(field, operator, valueSnap), where(field2, operator2, value2));
 
-                // Execute the query and fetch documents
+                // execute the query and fetch documents
                 const querySnapshot = await getDocs(q);
 
-                // Map over the documents and return data with document IDs
+                // map over the documents and return data with document IDs
                 const filteredItems = querySnapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()

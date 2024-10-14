@@ -1,5 +1,12 @@
+/**
+ * @file removeItem.ts, a TypeScript file that defines an API route that removes an item from the database.
+ * 
+ * @param userId the id of the user that is trying to remove the item
+ * @param itemId the id of the item to remove
+ */
+
 import { db } from "@/firebase/clientApp";
-import { doc, getDoc, setDoc, serverTimestamp, updateDoc, FieldValue, deleteDoc } from "firebase/firestore";
+import { doc, getDoc, deleteDoc } from "firebase/firestore";
 import 'firebase/firestore';
 import type { NextApiRequest, NextApiResponse } from 'next'
 
@@ -10,10 +17,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const itemRef = doc(db, 'items', itemId);
     const docSnap = await getDoc(itemRef);
     let submittedBy;
+    // if item exists
     if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-        submittedBy = docSnap.get("submittedBy");
+        submittedBy = docSnap.get("account");
+        // if user is the one who submitted the item
         if (submittedBy === userId) {
+            // delete item
             await deleteDoc(itemRef);
             res.status(200).end();
         } else {
@@ -26,24 +35,3 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(500).end();
     }
 }
-
-// // given a user ID and item ID, checks that the user created the item, and removes it from the database
-// export const doRemoveItem = async (userId: string, itemId: string) => {
-//     const itemRef = doc(db, 'items', itemId);
-//     const docSnap = await getDoc(itemRef);
-//     let submittedBy;
-//     if (docSnap.exists()) {
-//         console.log("Document data:", docSnap.data());
-//         submittedBy = docSnap.get("submittedBy");
-//         if (submittedBy === userId) {
-//             await deleteDoc(itemRef);
-//         } else {
-//             console.log('item was submitted by different user')
-//         }
-//     } else {
-//         // docSnap.data() will be undefined in this case
-//         console.log("No such user!");
-//     }
-//     // const userID = firebase.auth().currentUser?.uid;
-
-// }

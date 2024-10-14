@@ -5,6 +5,15 @@ import Account, { accountConverter } from "@/types/Account";
 import Neighborhood, { neighborhoodConverter } from "@/types/Neighborhood";
 import Item, { itemConverter } from "@/types/Item";
 
+/**
+ * @file updatePoints.ts, a TypeScript file that defines an API route that updates points in the database.
+ * 
+ * @param itemId the id of the item to update
+ * @param points the number of points to add
+ * @param userId the id of the user that is updating the points
+ * @description updates points for user, neighborhood, and user who posted the item.
+ */
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     console.log("received updatsPoints request");
     const data = req.body;
@@ -26,6 +35,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         await updateDoc(itemDocRef, {
             "claimed": true
         })
+
         // get user id of whoever posted
         let itemSnap = await getDoc(itemDocRef);
         let userIdReceived = "";
@@ -81,33 +91,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } else {
         res.status(500).end();
     }
-
 }
-
-// /**
-//   Updates a specific property of a Firestore document identified by its ID.
-//   
-//   @param collectionName - The name of the collection where the document is stored
-//   @param documentId - The ID of the document to be updated
-//   @param property - The property to be updated
-//   @param value - The new value for the property
-//   @returns A promise that resolves to a message indicating success or failure
-//  /
-// export async function updateDocumentProperty(
-//     collectionName: string,
-//     documentId: string,
-//     property: string,
-//     value: any
-// ): Promise<string> {
-//     const docRef = doc(db, collectionName, documentId);
-
-//     try {
-//         await updateDoc(docRef, {
-//             [property]: value
-//         });
-//         return `Document ${documentId} updated successfully.`;
-//     } catch (error: any) {
-//         console.error("Error updating document: ", error);
-//         throw new Error(`Failed to update document ${documentId}: ${error.message}`);
-//     }
-// }

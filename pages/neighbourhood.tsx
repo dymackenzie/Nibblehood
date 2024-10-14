@@ -1,22 +1,25 @@
+/**
+ * @file neighbourhood.tsx, the page where users can see the details of their neighborhood.
+ */
+
 import Sidenav from "@/components/Sidenav"
 import { Card, CardBody, CardHeader, Flex, Text, Heading, Image, HStack, Divider, IconButton } from "@chakra-ui/react"
 import { useState, useEffect } from "react"
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons'
 import axios from "axios"
 import { auth } from "@/firebase/clientApp"
-import Account, { accountConverter } from "@/types/Account"
-import Item, { itemConverter } from "@/types/Item"
+import Account from "@/types/Account"
+import Item from "@/types/Item"
 import Neighborhood from "@/types/Neighborhood"
 
 const Neighbourhood = () => {
-
-    const [user, setUser] = useState<Account>()
     const [recentActivity, setRecentActivity] = useState<Item[]>([]);
     const [topContributors, setTopContributors] = useState<Account[]>([]);
     const [neighborhood, setNeighborhood] = useState<Neighborhood>();
     const [ranking, setRanking] = useState(0);
     const [uid, setUID] = useState("");
 
+    // get items that are in the user's neighborhood
     useEffect(() => {
         if (uid.length > 0) {
             axios.post('/api/listFiltered', {
@@ -28,7 +31,8 @@ const Neighbourhood = () => {
             }).then((res) => setRecentActivity(res.data))
         }
     }, [uid])
-    //TODO: change to be top residents, not all residents
+    
+    // get users in the neighborhood
     useEffect(() => {
         if (uid.length > 0) {
             axios.post('/api/listFiltered', {
@@ -41,6 +45,7 @@ const Neighbourhood = () => {
         }
     }, [uid])
 
+    // get ranking of the neighborhood
     useEffect(() => {
         if (uid.length > 0) {
             axios.post('/api/listOrdered', {
@@ -50,6 +55,7 @@ const Neighbourhood = () => {
                 collectionName: "neighborhoods",
             }).then((res) => {
                 const neighborhoodsDesc = res.data;
+                // find the ranking of the neighborhood within all the other neighborhoods
                 for (let index = 0; index < neighborhoodsDesc.length; index++) {
                     const element = neighborhoodsDesc[index];
                     if (element.name === neighborhood?.name) {
@@ -60,6 +66,7 @@ const Neighbourhood = () => {
         }
     }, [uid])
 
+    // get neighborhood data
     useEffect(() => {
         if (uid.length > 0) {
             axios.post('/api/getNeighborhood', {
@@ -68,6 +75,7 @@ const Neighbourhood = () => {
         }
     }, [uid])
 
+    // get the current user's id
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
@@ -84,7 +92,6 @@ const Neighbourhood = () => {
             <Flex w={'20%'}>
                 <Sidenav />
             </Flex>
-
             <Flex flexDir={'column'} w={'80%'} ml={'20px'} mt={'15px'} pb={5}>
                 <Flex marginLeft={5}>
                     <Heading fontSize="5xl" mb={5}>{neighborhood?.name}</Heading>

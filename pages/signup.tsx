@@ -12,7 +12,7 @@ const SignUp = () => {
   const [message, setMessage] = useState('');
   const [messageType, setMessageType] = useState(''); // "success" or "error"
 
-  // Function to get the user's current location
+  // function to get the user's current location
   const getLocation = () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
@@ -29,7 +29,7 @@ const SignUp = () => {
     });
   };
 
-  // Function to handle sign up and store location
+  // function to handle sign up and store location
   const handleSignUp = async (e: Event) => {
     e.preventDefault();
     try {
@@ -46,7 +46,7 @@ const SignUp = () => {
       // create user
       let user = new Account(userCredential.user.uid, name, castLocation, neighborhood.id, neighborhood.name, 0);
 
-      // Store the user in Firestore with location details
+      // store the user in Firestore with location details
       await setDoc(doc(db, 'users', user.UUID).withConverter(accountConverter), user);
 
       // reset fields
@@ -69,7 +69,7 @@ const SignUp = () => {
     let neighborhoods:any[] = [];
     // get collection
     const neighborhoodCol = collection(db, "neighborhoods").withConverter(neighborhoodConverter);
-    // get dataS
+    // get data
     const snapshot = await getDocs(neighborhoodCol);
     // populate array
     snapshot.forEach((doc) => {

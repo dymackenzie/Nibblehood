@@ -1,16 +1,21 @@
-import { Text, Box, Button, Editable, EditableTextarea, Flex, Heading, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react"
-import React, { useState } from "react";
-// import { doAddItem } from "../api/addItem";
-import firebase from "firebase/compat/app";
+/**
+ * @file PostFood.tsx is a TypeScript file that defines the PostFood functional component.
+ * 
+ * This component is used to display the form for posting a new food item.
+ * The form includes fields for the item name, description, and image.
+ * The user can upload an image from their device.
+ * Once form is submitted, the item is added to the database.
+ */
+
+import { Box, Button, Flex, Heading, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Textarea, useDisclosure, useToast } from "@chakra-ui/react";
+import { useState } from "react";
 import axios from "axios";
 import SignUp from "@/pages/signup";
 import { getAuth } from "firebase/auth";
-import ItemComponent from "./ItemComponent";
 import Item from "@/types/Item";
 import { DEFAULT_POINTS } from "@/pages/api/addItem";
 import FileUploadButton from "./fileUploadButton";
 import { useRouter } from "next/router";
-
 
 const PostFood = () => {
   const [name, setName] = useState('');
@@ -24,18 +29,20 @@ const PostFood = () => {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  // create a new item object
   function getItem() {
     return new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", displayName ? displayName : "Username", "");
   }  
 
+  // handle the form submission
   async function handleSubmit() {
     console.log('sending auth check');
     const auth = getAuth();
     const user = auth.currentUser;    
 
     if (user) {
-      // doAddItem(name, description, file, false, userID)
       console.log('sending addItem request');
+      // if user is authenticated, add the item to the database
       const res = await axios.post("/api/addItem",
         {
           name: name,
@@ -45,12 +52,15 @@ const PostFood = () => {
           uid: user.uid
         });
       onClose();
-      setFile("")
-      toast({title: 'Success!', description: 'Item Uploaded', status: 'success'})
+      // clear the form
+      setFile("");
+      // show a success toast
+      toast({title: 'Success!', description: 'Item Uploaded', status: 'success'});
     router.reload()
-    } else {//redirect to login
+    } else {
+      //redirect to login
       console.log('user not authenticated, redirecting to log in (sign up)');
-      return (<SignUp />);
+      return (<SignUp/>);
     }
   }
 
@@ -58,8 +68,9 @@ const PostFood = () => {
 
   return (
     <>
-      <Button bottom={0} pos={'relative'} onClick={onOpen} colorScheme='teal' size='lg'>Post Food</Button>
-
+      <Button bottom={0} pos={'relative'} onClick={onOpen} colorScheme='teal' size='lg'>
+        Post Food
+      </Button>
       <Modal isOpen={isOpen} onClose={() => {onClose(); setFile('')}} size={'lg'}>
         <ModalOverlay />
         <ModalContent>
@@ -93,53 +104,37 @@ const PostFood = () => {
                       focusBorderColor='teal.500'
                     />
 
-                    {/* <Input type="file" onChange={handleChange} p={2} style={}/> */}
+                    <Flex mt={'20px'} w={'100%'} justifyContent={'center'}>
+                        <FileUploadButton updateFile={setFile} />
+                    </Flex>
 
-                    {/* <FileUploadButton onChange={handleChange} /> */}
-                    {/* {file && (
-                      <Image
-                        src={file}
-                        boxSize='300px'
-                        objectFit='cover'
-                        borderRadius='md'
-                        mt={4}
-                        alt='Selected item image'
-                      />
-                    )} */}
-                        <Flex mt={'20px'} w={'100%'} justifyContent={'center'}>
-                            <FileUploadButton updateFile={setFile} />
-                        </Flex>
-
-                      {file && (
-                        <Box mt={4} textAlign="center">
-                          <Box
-                            w="100%"
-                            h="300px"
-                            overflow="hidden"
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            borderWidth="2px"
-                            borderColor="teal.500"
-                            borderRadius="md"
-                          >
-                            <Image
-                              src={file}
-                              alt="Uploaded Image"
-                              objectFit="cover"
-                              width="100%"
-                              height="100%"
-                            />
-                          </Box>
+                    {file && (
+                      <Box mt={4} textAlign="center">
+                        <Box
+                          w="100%"
+                          h="300px"
+                          overflow="hidden"
+                          display="flex"
+                          justifyContent="center"
+                          alignItems="center"
+                          borderWidth="2px"
+                          borderColor="teal.500"
+                          borderRadius="md"
+                        >
+                          <Image
+                            src={file}
+                            alt="Uploaded Image"
+                            objectFit="cover"
+                            width="100%"
+                            height="100%"
+                          />
                         </Box>
-                      )}
+                      </Box>
+                    )}
                     
                   </Stack>
                 </form>
               </Box>
-              {/* <Box mt={8} w="100%">
-                <ItemComponent item={item} />
-              </Box> */}
             </Flex>
           </ModalBody>
 
@@ -152,19 +147,6 @@ const PostFood = () => {
       </Modal>
     </>
   )
-}
-
-const styles = {
-  image: {
-
-  },
-  button: {
-
-  },
-  input: {
-
-  }
-
 }
 
 export default PostFood

@@ -1,3 +1,7 @@
+/**
+ * @file clientApp.ts, a TypeScript file that initializes the Firebase app on the client side.
+ */
+
 import firebase, { getApps, getApp, initializeApp } from "firebase/app";
 import "firebase/auth";
 import { getAuth } from "firebase/auth";

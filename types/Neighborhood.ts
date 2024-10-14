@@ -1,3 +1,12 @@
+/**
+ * Neighborhood.ts, a TypeScript file that contains the Neighborhood class and neighborhoodConverter object.
+ * 
+ * Structure:
+ * - name: name of the neighborhood
+ * - location: latitude and longitude of the neighborhood
+ * - points: amount of points the neighborhood has
+ */
+
 export default class Neighborhood {
     name: string;
     location: {latitude: number, longitude: number};

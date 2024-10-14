@@ -1,6 +1,9 @@
+/**
+ * @file leaderboard.tsx, the page where users can see the top contributors in their city.
+ */
+
 import Sidenav from "@/components/Sidenav"
-import User from "@/components/User"
-import { Flex, Heading, HStack, Image, Table, TableCaption, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
+import { Flex, Heading, HStack, Image, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { auth } from "@/firebase/clientApp"
@@ -8,11 +11,11 @@ import Neighborhood from "@/types/Neighborhood"
 import Account from "@/types/Account"
 
 const Leaderboard = () => {
-
     const [neighborhoods, setNeighborhoods] = useState<Neighborhood[]>([]);
     const [topContributors, setTopContributors] = useState<Account[]>([]);
     const [uid, setUID] = useState("");
 
+    // filter neighborhoods by points (highest to lowest)
     useEffect(() => {
         if (uid.length > 0) {
           axios.post('/api/listOrdered', {
@@ -24,17 +27,19 @@ const Leaderboard = () => {
         }
       }, [uid])
 
-      useEffect(() => {
-        if (uid.length > 0) {
-          axios.post('/api/listOrdered', {
-            uid: uid,
-            collectionName: "users",
-            field: "points",
-            direction: "desc"
-        }).then((res) => setTopContributors(res.data))
-        }
-      }, [uid])
+    // order users by points (highest to lowest)
+    useEffect(() => {
+    if (uid.length > 0) {
+        axios.post('/api/listOrdered', {
+        uid: uid,
+        collectionName: "users",
+        field: "points",
+        direction: "desc"
+    }).then((res) => setTopContributors(res.data))
+    }
+    }, [uid])
 
+    // get the current user's id
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
@@ -63,16 +68,16 @@ const Leaderboard = () => {
                             </Flex>
                         ))}
                     </HStack>
-                        <TableContainer pb={5}>
-                        <Table variant='simple'>                            
-                            <Thead>
+                    <TableContainer pb={5}>
+                    <Table variant='simple'>                            
+                        <Thead>
                             <Tr>
                                 <Th>Rank</Th>
                                 <Th>Neighbourhood</Th>
                                 <Th isNumeric>Points</Th>
                             </Tr>
-                            </Thead>
-                            <Tbody>
+                        </Thead>
+                        <Tbody>
                             {neighborhoods.slice(0, 10).map((item, index) => (
                                 <Tr>
                                     <Td>{index + 1}</Td>
@@ -80,17 +85,12 @@ const Leaderboard = () => {
                                     <Td isNumeric>{item.points}</Td>
                                 </Tr>
                             ))}
-                            </Tbody>                            
-                        </Table>
-                        </TableContainer>
+                        </Tbody>                            
+                    </Table>
+                    </TableContainer>
                 </Flex>
             </Flex>
-
-         
-
-
         </Flex>
-        
     )
 }
 
