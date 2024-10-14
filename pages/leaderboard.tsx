@@ -63,7 +63,12 @@ const Leaderboard = () => {
                     <HStack>
                         {topContributors.slice(0, 5).map((item, index) => (
                             <Flex key={index} flexDir={'column'} justifyContent={'center'} alignItems={'center'} p={'20px'}>
-                                <Image w={"100px"} aspectRatio={1} objectFit={'cover'} src={"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"} borderRadius={'50%'}/>
+                                <Image w={"100px"} 
+                                    aspectRatio={1} 
+                                    objectFit={'cover'} 
+                                    src={"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/2048px-Default_pfp.svg.png"} 
+                                    borderRadius={'50%'}
+                                    alt="User Profile Image"/>
                                 <Text fontSize={'lg'} mt={'5px'}>{item.name}</Text>
                             </Flex>
                         ))}

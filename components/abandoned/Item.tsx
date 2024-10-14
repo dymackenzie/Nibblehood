@@ -19,7 +19,7 @@ const Item = ({item}: {item: ItemType}) => {
       const user = auth.currentUser;
       if (user) {
         // if user is authenticated, update the points of the user
-        const res = await axios.post("/api/updatePoints", {
+        await axios.post("/api/updatePoints", {
             itemId: item,
             points: item.points,
             userId: user.uid

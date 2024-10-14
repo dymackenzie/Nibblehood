@@ -12,8 +12,6 @@ import { useState } from "react";
 import axios from "axios";
 import SignUp from "@/pages/signup";
 import { getAuth } from "firebase/auth";
-import Item from "@/types/Item";
-import { DEFAULT_POINTS } from "@/pages/api/addItem";
 import FileUploadButton from "./fileUploadButton";
 import { useRouter } from "next/router";
 
@@ -21,18 +19,11 @@ const PostFood = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [file, setFile] = useState('');
-  const displayName = getAuth().currentUser?.displayName;
-  const [item, setItem] = useState(getItem());
 
   const toast = useToast()
   const router = useRouter()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-
-  // create a new item object
-  function getItem() {
-    return new Item(name, description, file, new Date(), false, DEFAULT_POINTS, "", displayName ? displayName : "Username", "");
-  }  
 
   // handle the form submission
   async function handleSubmit() {
@@ -43,7 +34,7 @@ const PostFood = () => {
     if (user) {
       console.log('sending addItem request');
       // if user is authenticated, add the item to the database
-      const res = await axios.post("/api/addItem",
+      await axios.post("/api/addItem",
         {
           name: name,
           description: description,
@@ -90,7 +81,7 @@ const PostFood = () => {
                       id="nameInput"
                       placeholder="Name"
                       value={name}
-                      onChange={(e) => { setName(e.target.value); setItem(getItem()); }}
+                      onChange={(e) => { setName(e.target.value); }}
                       size='lg'
                       focusBorderColor='teal.500'
                     />
@@ -99,7 +90,7 @@ const PostFood = () => {
                       id="textInput"
                       placeholder="Description"
                       value={description}
-                      onChange={(e) => { setDescription(e.target.value); setItem(getItem()); }}
+                      onChange={(e) => { setDescription(e.target.value); }}
                       size='lg'
                       focusBorderColor='teal.500'
                     />

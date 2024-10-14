@@ -28,8 +28,8 @@ const ItemComponent = ({ item }: { item: ItemType }) => {
     console.log("handling claim button");
     if (uid.length > 0) {
       // if user is authenticated, update the points of the user
-      let anyItem = item as any;
-      let temp = await axios.post("/api/updatePoints", {
+      const anyItem = item as any;
+      const temp = await axios.post("/api/updatePoints", {
         itemId: anyItem.id,
         points: item.points,
         userId: uid

@@ -25,7 +25,7 @@ function MyComponent() {
     googleMapsApiKey: "AIzaSyAa8AwVw9QKRS5AyGTih-iqcXgJ0ImcJ7o"
   })
 
-  const [map, setMap] = React.useState(null)
+  // const [map, setMap] = React.useState(null)
 
   const onLoad = React.useCallback(function callback(map: any) {
     // This is just an example of getting and using the map instance!!! don't just blindly copy!
@@ -34,11 +34,11 @@ function MyComponent() {
 
     map.setZoom(1)
 
-    setMap(map)
+    //setMap(map)
   }, [])
 
-  const onUnmount = React.useCallback(function callback(map: any) {
-    setMap(null)
+  const onUnmount = React.useCallback(function callback() {
+    //setMap(null)
   }, [])
 
   return isLoaded ? (

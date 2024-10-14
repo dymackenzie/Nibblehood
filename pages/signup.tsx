@@ -38,13 +38,13 @@ const SignUp = () => {
 
       // get the user's location
       const location = await getLocation();
-      let castLocation = location as {latitude: number, longitude: number};
+      const castLocation = location as {latitude: number, longitude: number};
 
       // find neighborhood closest
-      let neighborhood = await FindNeighborhood(castLocation);
+      const neighborhood = await FindNeighborhood(castLocation);
 
       // create user
-      let user = new Account(userCredential.user.uid, name, castLocation, neighborhood.id, neighborhood.name, 0);
+      const user = new Account(userCredential.user.uid, name, castLocation, neighborhood.id, neighborhood.name, 0);
 
       // store the user in Firestore with location details
       await setDoc(doc(db, 'users', user.UUID).withConverter(accountConverter), user);
@@ -66,7 +66,7 @@ const SignUp = () => {
   // algorithm to find closest neighborhood to user
   const FindNeighborhood = async (location: {latitude: number, longitude: number}) => {
     // init variables
-    let neighborhoods:any[] = [];
+    const neighborhoods:any[] = [];
     // get collection
     const neighborhoodCol = collection(db, "neighborhoods").withConverter(neighborhoodConverter);
     // get data

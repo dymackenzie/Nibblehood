@@ -46,7 +46,8 @@ function FileUploadButton({ updateFile } : any) {
                 console.log(error)
               });
           })
-          .catch((error) => {            
+          .catch((error) => {  
+            console.log(error)          
           });
       }, [imageUpload])
 
